@@ -4,10 +4,10 @@ return [
     'propel' => [
         'database' => [
             'connections' => [
-                'bookstore' => [
+                'supermarkets_chain' => [
                     'adapter'    => 'mysql',
                     'classname'  => 'Propel\Runtime\Connection\ConnectionWrapper',
-                    'dsn'        => 'mysql:host=localhost;dbname=bookstore',
+                    'dsn'        => 'mysql:host=localhost;dbname=supermarkets_chain',
                     'user'       => 'root',
                     'password'   => '',
                     'attributes' => []
@@ -15,12 +15,12 @@ return [
             ]
         ],
         'runtime' => [
-            'defaultConnection' => 'bookstore',
-            'connections' => ['bookstore']
+            'defaultConnection' => 'supermarkets_chain',
+            'connections' => ['supermarkets_chain']
         ],
         'generator' => [
-            'defaultConnection' => 'bookstore',
-            'connections' => ['bookstore']
+            'defaultConnection' => 'supermarkets_chain',
+            'connections' => ['supermarkets_chain']
         ]
     ]
 ];

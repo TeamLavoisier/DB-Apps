@@ -20,11 +20,16 @@ class DataImportService
     private $data;
 
     /**
-     * @param $dbContext
+     * @var \ANSR\Services\DatabaseCreator\ConnectionPool
      */
-    public function __construct($dbContext)
-    {
+    private $dbContext;
 
+    /**
+     * @param \ANSR\Services\DatabaseCreator\ConnectionPool $dbContext
+     */
+    public function __construct(\ANSR\Services\DatabaseCreator\ConnectionPool $dbContext)
+    {
+        $this->dbContext = $dbContext;
     }
 
     /**
@@ -63,10 +68,19 @@ class DataImportService
     }
 
     /**
+     * @return \ANSR\Services\DatabaseCreator\ConnectionPool
+     */
+    public function getDbContext()
+    {
+        return $this->dbContext;
+    }
+
+    /**
      * @return void
      */
     public function kickstart()
     {
+        $this->getDbContext()->createConnection();
         $this->getImportStrategy()->import($this->getData());
     }
 
@@ -80,10 +94,10 @@ class DataImportService
     public static function create($dbType, $dataType, $data)
     {
         $strategy = ImportStrategy\ImportStrategyFactory::create($dataType);
+        $dbContext = new \ANSR\Services\DatabaseCreator\ConnectionPool($dbType);
 
-        return (new self($dbType))
+        return (new self($dbContext))
             ->setData($data)
             ->setImportStrategy($strategy);
     }
-
 }

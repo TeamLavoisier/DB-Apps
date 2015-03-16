@@ -41,25 +41,14 @@ $__router = '\ANSR\Routing\DefaultRouter';
  */
 $__router
     ::addRoute(
-        (new \ANSR\Routing\Route("/user/[0-9]+", "Users", "view")) //default is type standard which combines get and post
-        ->addRequestMapping(
-            new \ANSR\Library\Request\RouteMap(1, 'id')
-        )
-    )
-    ->addRoute(
-        (new \ANSR\Routing\Route("/user/[0-9]+", "Users", "edit", \ANSR\Library\Request\Request::TYPE_PUT))
-        ->addRequestMapping(
-            new \ANSR\Library\Request\RouteMap(1, 'id')
-        )
-    )
-    ->addRoute(
-        (new \ANSR\Routing\Route("/user/[0-9]+", "Users", "delete", \ANSR\Library\Request\Request::TYPE_DELETE))
-        ->addRequestMapping(
-            new \ANSR\Library\Request\RouteMap(1, 'id')
-        )
+        (new \ANSR\Routing\Route("/importer/[a-zA-Z]+/[a-zA-Z]", "Importer", "doImport", \ANSR\Library\Request\Request::TYPE_POST))
+            ->addRequestMapping(
+                new \ANSR\Library\Request\RouteMap(1, 'database')
+            )
+            ->addRequestMapping(
+                new \ANSR\Library\Request\RouteMap(2, 'dataType')
+            )
     );
-
-
 
 \ANSR\Library\Registry\Registry::set('WEB_SERVICE', true);
 
