@@ -48,6 +48,15 @@ $__router
             ->addRequestMapping(
                 new \ANSR\Library\Request\RouteMap(2, 'dataType')
             )
+    )
+    ->addRoute(
+        (new \ANSR\Routing\Route("/data/[a-zA-Z]+/[a-zA-Z]+", "Data", "get", \ANSR\Library\Request\Request::TYPE_GET))
+            ->addRequestMapping(
+                new \ANSR\Library\Request\RouteMap(1, 'database')
+            )
+            ->addRequestMapping(
+                new \ANSR\Library\Request\RouteMap(2, 'table')
+            )
     );
 
 \ANSR\Library\Registry\Registry::set('WEB_SERVICE', true);
