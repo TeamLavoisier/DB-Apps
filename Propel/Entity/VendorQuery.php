@@ -2,10 +2,10 @@
 
 namespace ANSR\Propel\Entity;
 
-use ANSR\Propel\Entity\Base\Book as BaseBook;
+use ANSR\Propel\Entity\Base\VendorQuery as BaseVendorQuery;
 
 /**
- * Skeleton subclass for representing a row from the 'book' table.
+ * Skeleton subclass for performing query and update operations on the 'vendors' table.
  *
  *
  *
@@ -14,7 +14,7 @@ use ANSR\Propel\Entity\Base\Book as BaseBook;
  * long as it does not already exist in the output directory.
  *
  */
-class Book extends BaseBook
+class VendorQuery extends BaseVendorQuery
 {
 
 }

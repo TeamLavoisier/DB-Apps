@@ -4,9 +4,9 @@ namespace ANSR\Propel\Entity\Base;
 
 use \Exception;
 use \PDO;
-use ANSR\Propel\Entity\Author as ChildAuthor;
-use ANSR\Propel\Entity\AuthorQuery as ChildAuthorQuery;
-use ANSR\Propel\Entity\Map\AuthorTableMap;
+use ANSR\Propel\Entity\Measure as ChildMeasure;
+use ANSR\Propel\Entity\MeasureQuery as ChildMeasureQuery;
+use ANSR\Propel\Entity\Map\MeasureTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -16,79 +16,74 @@ use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
 
 /**
- * Base class that represents a query for the 'author' table.
+ * Base class that represents a query for the 'measures' table.
  *
  *
  *
- * @method     ChildAuthorQuery orderById($order = Criteria::ASC) Order by the id column
- * @method     ChildAuthorQuery orderByFirstName($order = Criteria::ASC) Order by the first_name column
- * @method     ChildAuthorQuery orderByLastName($order = Criteria::ASC) Order by the last_name column
+ * @method     ChildMeasureQuery orderById($order = Criteria::ASC) Order by the id column
+ * @method     ChildMeasureQuery orderByName($order = Criteria::ASC) Order by the name column
  *
- * @method     ChildAuthorQuery groupById() Group by the id column
- * @method     ChildAuthorQuery groupByFirstName() Group by the first_name column
- * @method     ChildAuthorQuery groupByLastName() Group by the last_name column
+ * @method     ChildMeasureQuery groupById() Group by the id column
+ * @method     ChildMeasureQuery groupByName() Group by the name column
  *
- * @method     ChildAuthorQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
- * @method     ChildAuthorQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
- * @method     ChildAuthorQuery innerJoin($relation) Adds a INNER JOIN clause to the query
+ * @method     ChildMeasureQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
+ * @method     ChildMeasureQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
+ * @method     ChildMeasureQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method     ChildAuthorQuery leftJoinBook($relationAlias = null) Adds a LEFT JOIN clause to the query using the Book relation
- * @method     ChildAuthorQuery rightJoinBook($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Book relation
- * @method     ChildAuthorQuery innerJoinBook($relationAlias = null) Adds a INNER JOIN clause to the query using the Book relation
+ * @method     ChildMeasureQuery leftJoinProduct($relationAlias = null) Adds a LEFT JOIN clause to the query using the Product relation
+ * @method     ChildMeasureQuery rightJoinProduct($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Product relation
+ * @method     ChildMeasureQuery innerJoinProduct($relationAlias = null) Adds a INNER JOIN clause to the query using the Product relation
  *
- * @method     \ANSR\Propel\Entity\BookQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \ANSR\Propel\Entity\ProductQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
- * @method     ChildAuthor findOne(ConnectionInterface $con = null) Return the first ChildAuthor matching the query
- * @method     ChildAuthor findOneOrCreate(ConnectionInterface $con = null) Return the first ChildAuthor matching the query, or a new ChildAuthor object populated from the query conditions when no match is found
+ * @method     ChildMeasure findOne(ConnectionInterface $con = null) Return the first ChildMeasure matching the query
+ * @method     ChildMeasure findOneOrCreate(ConnectionInterface $con = null) Return the first ChildMeasure matching the query, or a new ChildMeasure object populated from the query conditions when no match is found
  *
- * @method     ChildAuthor findOneById(int $id) Return the first ChildAuthor filtered by the id column
- * @method     ChildAuthor findOneByFirstName(string $first_name) Return the first ChildAuthor filtered by the first_name column
- * @method     ChildAuthor findOneByLastName(string $last_name) Return the first ChildAuthor filtered by the last_name column *
+ * @method     ChildMeasure findOneById(int $id) Return the first ChildMeasure filtered by the id column
+ * @method     ChildMeasure findOneByName(string $name) Return the first ChildMeasure filtered by the name column *
 
- * @method     ChildAuthor requirePk($key, ConnectionInterface $con = null) Return the ChildAuthor by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildAuthor requireOne(ConnectionInterface $con = null) Return the first ChildAuthor matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildMeasure requirePk($key, ConnectionInterface $con = null) Return the ChildMeasure by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildMeasure requireOne(ConnectionInterface $con = null) Return the first ChildMeasure matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildAuthor requireOneById(int $id) Return the first ChildAuthor filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildAuthor requireOneByFirstName(string $first_name) Return the first ChildAuthor filtered by the first_name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildAuthor requireOneByLastName(string $last_name) Return the first ChildAuthor filtered by the last_name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildMeasure requireOneById(int $id) Return the first ChildMeasure filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildMeasure requireOneByName(string $name) Return the first ChildMeasure filtered by the name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildAuthor[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildAuthor objects based on current ModelCriteria
- * @method     ChildAuthor[]|ObjectCollection findById(int $id) Return ChildAuthor objects filtered by the id column
- * @method     ChildAuthor[]|ObjectCollection findByFirstName(string $first_name) Return ChildAuthor objects filtered by the first_name column
- * @method     ChildAuthor[]|ObjectCollection findByLastName(string $last_name) Return ChildAuthor objects filtered by the last_name column
- * @method     ChildAuthor[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
+ * @method     ChildMeasure[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildMeasure objects based on current ModelCriteria
+ * @method     ChildMeasure[]|ObjectCollection findById(int $id) Return ChildMeasure objects filtered by the id column
+ * @method     ChildMeasure[]|ObjectCollection findByName(string $name) Return ChildMeasure objects filtered by the name column
+ * @method     ChildMeasure[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
-abstract class AuthorQuery extends ModelCriteria
+abstract class MeasureQuery extends ModelCriteria
 {
     protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
-     * Initializes internal state of \ANSR\Propel\Entity\Base\AuthorQuery object.
+     * Initializes internal state of \ANSR\Propel\Entity\Base\MeasureQuery object.
      *
      * @param     string $dbName The database name
      * @param     string $modelName The phpName of a model, e.g. 'Book'
      * @param     string $modelAlias The alias for the model in this query, e.g. 'b'
      */
-    public function __construct($dbName = 'bookstore', $modelName = '\\ANSR\\Propel\\Entity\\Author', $modelAlias = null)
+    public function __construct($dbName = 'supermarkets_chain', $modelName = '\\ANSR\\Propel\\Entity\\Measure', $modelAlias = null)
     {
         parent::__construct($dbName, $modelName, $modelAlias);
     }
 
     /**
-     * Returns a new ChildAuthorQuery object.
+     * Returns a new ChildMeasureQuery object.
      *
      * @param     string $modelAlias The alias of a model in the query
      * @param     Criteria $criteria Optional Criteria to build the query from
      *
-     * @return ChildAuthorQuery
+     * @return ChildMeasureQuery
      */
     public static function create($modelAlias = null, Criteria $criteria = null)
     {
-        if ($criteria instanceof ChildAuthorQuery) {
+        if ($criteria instanceof ChildMeasureQuery) {
             return $criteria;
         }
-        $query = new ChildAuthorQuery();
+        $query = new ChildMeasureQuery();
         if (null !== $modelAlias) {
             $query->setModelAlias($modelAlias);
         }
@@ -111,19 +106,19 @@ abstract class AuthorQuery extends ModelCriteria
      * @param mixed $key Primary key to use for the query
      * @param ConnectionInterface $con an optional connection object
      *
-     * @return ChildAuthor|array|mixed the result, formatted by the current formatter
+     * @return ChildMeasure|array|mixed the result, formatted by the current formatter
      */
     public function findPk($key, ConnectionInterface $con = null)
     {
         if ($key === null) {
             return null;
         }
-        if ((null !== ($obj = AuthorTableMap::getInstanceFromPool((string) $key))) && !$this->formatter) {
+        if ((null !== ($obj = MeasureTableMap::getInstanceFromPool((string) $key))) && !$this->formatter) {
             // the object is already in the instance pool
             return $obj;
         }
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(AuthorTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(MeasureTableMap::DATABASE_NAME);
         }
         $this->basePreSelect($con);
         if ($this->formatter || $this->modelAlias || $this->with || $this->select
@@ -144,11 +139,11 @@ abstract class AuthorQuery extends ModelCriteria
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return ChildAuthor A model object, or null if the key is not found
+     * @return ChildMeasure A model object, or null if the key is not found
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, first_name, last_name FROM author WHERE id = :p0';
+        $sql = 'SELECT id, name FROM measures WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -159,10 +154,10 @@ abstract class AuthorQuery extends ModelCriteria
         }
         $obj = null;
         if ($row = $stmt->fetch(\PDO::FETCH_NUM)) {
-            /** @var ChildAuthor $obj */
-            $obj = new ChildAuthor();
+            /** @var ChildMeasure $obj */
+            $obj = new ChildMeasure();
             $obj->hydrate($row);
-            AuthorTableMap::addInstanceToPool($obj, (string) $key);
+            MeasureTableMap::addInstanceToPool($obj, (string) $key);
         }
         $stmt->closeCursor();
 
@@ -175,7 +170,7 @@ abstract class AuthorQuery extends ModelCriteria
      * @param     mixed $key Primary key to use for the query
      * @param     ConnectionInterface $con A connection object
      *
-     * @return ChildAuthor|array|mixed the result, formatted by the current formatter
+     * @return ChildMeasure|array|mixed the result, formatted by the current formatter
      */
     protected function findPkComplex($key, ConnectionInterface $con)
     {
@@ -217,12 +212,12 @@ abstract class AuthorQuery extends ModelCriteria
      *
      * @param     mixed $key Primary key to use for the query
      *
-     * @return $this|ChildAuthorQuery The current query, for fluid interface
+     * @return $this|ChildMeasureQuery The current query, for fluid interface
      */
     public function filterByPrimaryKey($key)
     {
 
-        return $this->addUsingAlias(AuthorTableMap::COL_ID, $key, Criteria::EQUAL);
+        return $this->addUsingAlias(MeasureTableMap::COL_ID, $key, Criteria::EQUAL);
     }
 
     /**
@@ -230,12 +225,12 @@ abstract class AuthorQuery extends ModelCriteria
      *
      * @param     array $keys The list of primary key to use for the query
      *
-     * @return $this|ChildAuthorQuery The current query, for fluid interface
+     * @return $this|ChildMeasureQuery The current query, for fluid interface
      */
     public function filterByPrimaryKeys($keys)
     {
 
-        return $this->addUsingAlias(AuthorTableMap::COL_ID, $keys, Criteria::IN);
+        return $this->addUsingAlias(MeasureTableMap::COL_ID, $keys, Criteria::IN);
     }
 
     /**
@@ -254,18 +249,18 @@ abstract class AuthorQuery extends ModelCriteria
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildAuthorQuery The current query, for fluid interface
+     * @return $this|ChildMeasureQuery The current query, for fluid interface
      */
     public function filterById($id = null, $comparison = null)
     {
         if (is_array($id)) {
             $useMinMax = false;
             if (isset($id['min'])) {
-                $this->addUsingAlias(AuthorTableMap::COL_ID, $id['min'], Criteria::GREATER_EQUAL);
+                $this->addUsingAlias(MeasureTableMap::COL_ID, $id['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
             if (isset($id['max'])) {
-                $this->addUsingAlias(AuthorTableMap::COL_ID, $id['max'], Criteria::LESS_EQUAL);
+                $this->addUsingAlias(MeasureTableMap::COL_ID, $id['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -276,102 +271,73 @@ abstract class AuthorQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(AuthorTableMap::COL_ID, $id, $comparison);
+        return $this->addUsingAlias(MeasureTableMap::COL_ID, $id, $comparison);
     }
 
     /**
-     * Filter the query on the first_name column
+     * Filter the query on the name column
      *
      * Example usage:
      * <code>
-     * $query->filterByFirstName('fooValue');   // WHERE first_name = 'fooValue'
-     * $query->filterByFirstName('%fooValue%'); // WHERE first_name LIKE '%fooValue%'
+     * $query->filterByName('fooValue');   // WHERE name = 'fooValue'
+     * $query->filterByName('%fooValue%'); // WHERE name LIKE '%fooValue%'
      * </code>
      *
-     * @param     string $firstName The value to use as filter.
+     * @param     string $name The value to use as filter.
      *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildAuthorQuery The current query, for fluid interface
+     * @return $this|ChildMeasureQuery The current query, for fluid interface
      */
-    public function filterByFirstName($firstName = null, $comparison = null)
+    public function filterByName($name = null, $comparison = null)
     {
         if (null === $comparison) {
-            if (is_array($firstName)) {
+            if (is_array($name)) {
                 $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $firstName)) {
-                $firstName = str_replace('*', '%', $firstName);
+            } elseif (preg_match('/[\%\*]/', $name)) {
+                $name = str_replace('*', '%', $name);
                 $comparison = Criteria::LIKE;
             }
         }
 
-        return $this->addUsingAlias(AuthorTableMap::COL_FIRST_NAME, $firstName, $comparison);
+        return $this->addUsingAlias(MeasureTableMap::COL_NAME, $name, $comparison);
     }
 
     /**
-     * Filter the query on the last_name column
+     * Filter the query by a related \ANSR\Propel\Entity\Product object
      *
-     * Example usage:
-     * <code>
-     * $query->filterByLastName('fooValue');   // WHERE last_name = 'fooValue'
-     * $query->filterByLastName('%fooValue%'); // WHERE last_name LIKE '%fooValue%'
-     * </code>
-     *
-     * @param     string $lastName The value to use as filter.
-     *              Accepts wildcards (* and % trigger a LIKE)
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildAuthorQuery The current query, for fluid interface
-     */
-    public function filterByLastName($lastName = null, $comparison = null)
-    {
-        if (null === $comparison) {
-            if (is_array($lastName)) {
-                $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $lastName)) {
-                $lastName = str_replace('*', '%', $lastName);
-                $comparison = Criteria::LIKE;
-            }
-        }
-
-        return $this->addUsingAlias(AuthorTableMap::COL_LAST_NAME, $lastName, $comparison);
-    }
-
-    /**
-     * Filter the query by a related \ANSR\Propel\Entity\Book object
-     *
-     * @param \ANSR\Propel\Entity\Book|ObjectCollection $book the related object to use as filter
+     * @param \ANSR\Propel\Entity\Product|ObjectCollection $product the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return ChildAuthorQuery The current query, for fluid interface
+     * @return ChildMeasureQuery The current query, for fluid interface
      */
-    public function filterByBook($book, $comparison = null)
+    public function filterByProduct($product, $comparison = null)
     {
-        if ($book instanceof \ANSR\Propel\Entity\Book) {
+        if ($product instanceof \ANSR\Propel\Entity\Product) {
             return $this
-                ->addUsingAlias(AuthorTableMap::COL_ID, $book->getAuthorId(), $comparison);
-        } elseif ($book instanceof ObjectCollection) {
+                ->addUsingAlias(MeasureTableMap::COL_ID, $product->getMeasureId(), $comparison);
+        } elseif ($product instanceof ObjectCollection) {
             return $this
-                ->useBookQuery()
-                ->filterByPrimaryKeys($book->getPrimaryKeys())
+                ->useProductQuery()
+                ->filterByPrimaryKeys($product->getPrimaryKeys())
                 ->endUse();
         } else {
-            throw new PropelException('filterByBook() only accepts arguments of type \ANSR\Propel\Entity\Book or Collection');
+            throw new PropelException('filterByProduct() only accepts arguments of type \ANSR\Propel\Entity\Product or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the Book relation
+     * Adds a JOIN clause to the query using the Product relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return $this|ChildAuthorQuery The current query, for fluid interface
+     * @return $this|ChildMeasureQuery The current query, for fluid interface
      */
-    public function joinBook($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinProduct($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Book');
+        $relationMap = $tableMap->getRelation('Product');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -386,14 +352,14 @@ abstract class AuthorQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'Book');
+            $this->addJoinObject($join, 'Product');
         }
 
         return $this;
     }
 
     /**
-     * Use the Book relation Book object
+     * Use the Product relation Product object
      *
      * @see useQuery()
      *
@@ -401,33 +367,33 @@ abstract class AuthorQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return \ANSR\Propel\Entity\BookQuery A secondary query class using the current class as primary query
+     * @return \ANSR\Propel\Entity\ProductQuery A secondary query class using the current class as primary query
      */
-    public function useBookQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useProductQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinBook($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Book', '\ANSR\Propel\Entity\BookQuery');
+            ->joinProduct($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Product', '\ANSR\Propel\Entity\ProductQuery');
     }
 
     /**
      * Exclude object from result
      *
-     * @param   ChildAuthor $author Object to remove from the list of results
+     * @param   ChildMeasure $measure Object to remove from the list of results
      *
-     * @return $this|ChildAuthorQuery The current query, for fluid interface
+     * @return $this|ChildMeasureQuery The current query, for fluid interface
      */
-    public function prune($author = null)
+    public function prune($measure = null)
     {
-        if ($author) {
-            $this->addUsingAlias(AuthorTableMap::COL_ID, $author->getId(), Criteria::NOT_EQUAL);
+        if ($measure) {
+            $this->addUsingAlias(MeasureTableMap::COL_ID, $measure->getId(), Criteria::NOT_EQUAL);
         }
 
         return $this;
     }
 
     /**
-     * Deletes all rows from the author table.
+     * Deletes all rows from the measures table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
@@ -435,7 +401,7 @@ abstract class AuthorQuery extends ModelCriteria
     public function doDeleteAll(ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(AuthorTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(MeasureTableMap::DATABASE_NAME);
         }
 
         // use transaction because $criteria could contain info
@@ -446,8 +412,8 @@ abstract class AuthorQuery extends ModelCriteria
             // Because this db requires some delete cascade/set null emulation, we have to
             // clear the cached instance *after* the emulation has happened (since
             // instances get re-added by the select statement contained therein).
-            AuthorTableMap::clearInstancePool();
-            AuthorTableMap::clearRelatedInstancePool();
+            MeasureTableMap::clearInstancePool();
+            MeasureTableMap::clearRelatedInstancePool();
 
             return $affectedRows;
         });
@@ -465,26 +431,26 @@ abstract class AuthorQuery extends ModelCriteria
     public function delete(ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(AuthorTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(MeasureTableMap::DATABASE_NAME);
         }
 
         $criteria = $this;
 
         // Set the correct dbName
-        $criteria->setDbName(AuthorTableMap::DATABASE_NAME);
+        $criteria->setDbName(MeasureTableMap::DATABASE_NAME);
 
         // use transaction because $criteria could contain info
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
 
-            AuthorTableMap::removeInstanceFromPool($criteria);
+            MeasureTableMap::removeInstanceFromPool($criteria);
 
             $affectedRows += ModelCriteria::delete($con);
-            AuthorTableMap::clearRelatedInstancePool();
+            MeasureTableMap::clearRelatedInstancePool();
 
             return $affectedRows;
         });
     }
 
-} // AuthorQuery
+} // MeasureQuery

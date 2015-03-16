@@ -4,9 +4,9 @@ namespace ANSR\Propel\Entity\Base;
 
 use \Exception;
 use \PDO;
-use ANSR\Propel\Entity\Publisher as ChildPublisher;
-use ANSR\Propel\Entity\PublisherQuery as ChildPublisherQuery;
-use ANSR\Propel\Entity\Map\PublisherTableMap;
+use ANSR\Propel\Entity\Town as ChildTown;
+use ANSR\Propel\Entity\TownQuery as ChildTownQuery;
+use ANSR\Propel\Entity\Map\TownTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -16,74 +16,74 @@ use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
 
 /**
- * Base class that represents a query for the 'publisher' table.
+ * Base class that represents a query for the 'towns' table.
  *
  *
  *
- * @method     ChildPublisherQuery orderById($order = Criteria::ASC) Order by the id column
- * @method     ChildPublisherQuery orderByName($order = Criteria::ASC) Order by the name column
+ * @method     ChildTownQuery orderById($order = Criteria::ASC) Order by the id column
+ * @method     ChildTownQuery orderByName($order = Criteria::ASC) Order by the name column
  *
- * @method     ChildPublisherQuery groupById() Group by the id column
- * @method     ChildPublisherQuery groupByName() Group by the name column
+ * @method     ChildTownQuery groupById() Group by the id column
+ * @method     ChildTownQuery groupByName() Group by the name column
  *
- * @method     ChildPublisherQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
- * @method     ChildPublisherQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
- * @method     ChildPublisherQuery innerJoin($relation) Adds a INNER JOIN clause to the query
+ * @method     ChildTownQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
+ * @method     ChildTownQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
+ * @method     ChildTownQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method     ChildPublisherQuery leftJoinBook($relationAlias = null) Adds a LEFT JOIN clause to the query using the Book relation
- * @method     ChildPublisherQuery rightJoinBook($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Book relation
- * @method     ChildPublisherQuery innerJoinBook($relationAlias = null) Adds a INNER JOIN clause to the query using the Book relation
+ * @method     ChildTownQuery leftJoinSupermarket($relationAlias = null) Adds a LEFT JOIN clause to the query using the Supermarket relation
+ * @method     ChildTownQuery rightJoinSupermarket($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Supermarket relation
+ * @method     ChildTownQuery innerJoinSupermarket($relationAlias = null) Adds a INNER JOIN clause to the query using the Supermarket relation
  *
- * @method     \ANSR\Propel\Entity\BookQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \ANSR\Propel\Entity\SupermarketQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
- * @method     ChildPublisher findOne(ConnectionInterface $con = null) Return the first ChildPublisher matching the query
- * @method     ChildPublisher findOneOrCreate(ConnectionInterface $con = null) Return the first ChildPublisher matching the query, or a new ChildPublisher object populated from the query conditions when no match is found
+ * @method     ChildTown findOne(ConnectionInterface $con = null) Return the first ChildTown matching the query
+ * @method     ChildTown findOneOrCreate(ConnectionInterface $con = null) Return the first ChildTown matching the query, or a new ChildTown object populated from the query conditions when no match is found
  *
- * @method     ChildPublisher findOneById(int $id) Return the first ChildPublisher filtered by the id column
- * @method     ChildPublisher findOneByName(string $name) Return the first ChildPublisher filtered by the name column *
+ * @method     ChildTown findOneById(int $id) Return the first ChildTown filtered by the id column
+ * @method     ChildTown findOneByName(string $name) Return the first ChildTown filtered by the name column *
 
- * @method     ChildPublisher requirePk($key, ConnectionInterface $con = null) Return the ChildPublisher by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildPublisher requireOne(ConnectionInterface $con = null) Return the first ChildPublisher matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildTown requirePk($key, ConnectionInterface $con = null) Return the ChildTown by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildTown requireOne(ConnectionInterface $con = null) Return the first ChildTown matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildPublisher requireOneById(int $id) Return the first ChildPublisher filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildPublisher requireOneByName(string $name) Return the first ChildPublisher filtered by the name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildTown requireOneById(int $id) Return the first ChildTown filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildTown requireOneByName(string $name) Return the first ChildTown filtered by the name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildPublisher[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildPublisher objects based on current ModelCriteria
- * @method     ChildPublisher[]|ObjectCollection findById(int $id) Return ChildPublisher objects filtered by the id column
- * @method     ChildPublisher[]|ObjectCollection findByName(string $name) Return ChildPublisher objects filtered by the name column
- * @method     ChildPublisher[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
+ * @method     ChildTown[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildTown objects based on current ModelCriteria
+ * @method     ChildTown[]|ObjectCollection findById(int $id) Return ChildTown objects filtered by the id column
+ * @method     ChildTown[]|ObjectCollection findByName(string $name) Return ChildTown objects filtered by the name column
+ * @method     ChildTown[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
-abstract class PublisherQuery extends ModelCriteria
+abstract class TownQuery extends ModelCriteria
 {
     protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
-     * Initializes internal state of \ANSR\Propel\Entity\Base\PublisherQuery object.
+     * Initializes internal state of \ANSR\Propel\Entity\Base\TownQuery object.
      *
      * @param     string $dbName The database name
      * @param     string $modelName The phpName of a model, e.g. 'Book'
      * @param     string $modelAlias The alias for the model in this query, e.g. 'b'
      */
-    public function __construct($dbName = 'bookstore', $modelName = '\\ANSR\\Propel\\Entity\\Publisher', $modelAlias = null)
+    public function __construct($dbName = 'supermarkets_chain', $modelName = '\\ANSR\\Propel\\Entity\\Town', $modelAlias = null)
     {
         parent::__construct($dbName, $modelName, $modelAlias);
     }
 
     /**
-     * Returns a new ChildPublisherQuery object.
+     * Returns a new ChildTownQuery object.
      *
      * @param     string $modelAlias The alias of a model in the query
      * @param     Criteria $criteria Optional Criteria to build the query from
      *
-     * @return ChildPublisherQuery
+     * @return ChildTownQuery
      */
     public static function create($modelAlias = null, Criteria $criteria = null)
     {
-        if ($criteria instanceof ChildPublisherQuery) {
+        if ($criteria instanceof ChildTownQuery) {
             return $criteria;
         }
-        $query = new ChildPublisherQuery();
+        $query = new ChildTownQuery();
         if (null !== $modelAlias) {
             $query->setModelAlias($modelAlias);
         }
@@ -106,19 +106,19 @@ abstract class PublisherQuery extends ModelCriteria
      * @param mixed $key Primary key to use for the query
      * @param ConnectionInterface $con an optional connection object
      *
-     * @return ChildPublisher|array|mixed the result, formatted by the current formatter
+     * @return ChildTown|array|mixed the result, formatted by the current formatter
      */
     public function findPk($key, ConnectionInterface $con = null)
     {
         if ($key === null) {
             return null;
         }
-        if ((null !== ($obj = PublisherTableMap::getInstanceFromPool((string) $key))) && !$this->formatter) {
+        if ((null !== ($obj = TownTableMap::getInstanceFromPool((string) $key))) && !$this->formatter) {
             // the object is already in the instance pool
             return $obj;
         }
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(PublisherTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(TownTableMap::DATABASE_NAME);
         }
         $this->basePreSelect($con);
         if ($this->formatter || $this->modelAlias || $this->with || $this->select
@@ -139,11 +139,11 @@ abstract class PublisherQuery extends ModelCriteria
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return ChildPublisher A model object, or null if the key is not found
+     * @return ChildTown A model object, or null if the key is not found
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, name FROM publisher WHERE id = :p0';
+        $sql = 'SELECT id, name FROM towns WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -154,10 +154,10 @@ abstract class PublisherQuery extends ModelCriteria
         }
         $obj = null;
         if ($row = $stmt->fetch(\PDO::FETCH_NUM)) {
-            /** @var ChildPublisher $obj */
-            $obj = new ChildPublisher();
+            /** @var ChildTown $obj */
+            $obj = new ChildTown();
             $obj->hydrate($row);
-            PublisherTableMap::addInstanceToPool($obj, (string) $key);
+            TownTableMap::addInstanceToPool($obj, (string) $key);
         }
         $stmt->closeCursor();
 
@@ -170,7 +170,7 @@ abstract class PublisherQuery extends ModelCriteria
      * @param     mixed $key Primary key to use for the query
      * @param     ConnectionInterface $con A connection object
      *
-     * @return ChildPublisher|array|mixed the result, formatted by the current formatter
+     * @return ChildTown|array|mixed the result, formatted by the current formatter
      */
     protected function findPkComplex($key, ConnectionInterface $con)
     {
@@ -212,12 +212,12 @@ abstract class PublisherQuery extends ModelCriteria
      *
      * @param     mixed $key Primary key to use for the query
      *
-     * @return $this|ChildPublisherQuery The current query, for fluid interface
+     * @return $this|ChildTownQuery The current query, for fluid interface
      */
     public function filterByPrimaryKey($key)
     {
 
-        return $this->addUsingAlias(PublisherTableMap::COL_ID, $key, Criteria::EQUAL);
+        return $this->addUsingAlias(TownTableMap::COL_ID, $key, Criteria::EQUAL);
     }
 
     /**
@@ -225,12 +225,12 @@ abstract class PublisherQuery extends ModelCriteria
      *
      * @param     array $keys The list of primary key to use for the query
      *
-     * @return $this|ChildPublisherQuery The current query, for fluid interface
+     * @return $this|ChildTownQuery The current query, for fluid interface
      */
     public function filterByPrimaryKeys($keys)
     {
 
-        return $this->addUsingAlias(PublisherTableMap::COL_ID, $keys, Criteria::IN);
+        return $this->addUsingAlias(TownTableMap::COL_ID, $keys, Criteria::IN);
     }
 
     /**
@@ -249,18 +249,18 @@ abstract class PublisherQuery extends ModelCriteria
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildPublisherQuery The current query, for fluid interface
+     * @return $this|ChildTownQuery The current query, for fluid interface
      */
     public function filterById($id = null, $comparison = null)
     {
         if (is_array($id)) {
             $useMinMax = false;
             if (isset($id['min'])) {
-                $this->addUsingAlias(PublisherTableMap::COL_ID, $id['min'], Criteria::GREATER_EQUAL);
+                $this->addUsingAlias(TownTableMap::COL_ID, $id['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
             if (isset($id['max'])) {
-                $this->addUsingAlias(PublisherTableMap::COL_ID, $id['max'], Criteria::LESS_EQUAL);
+                $this->addUsingAlias(TownTableMap::COL_ID, $id['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -271,7 +271,7 @@ abstract class PublisherQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(PublisherTableMap::COL_ID, $id, $comparison);
+        return $this->addUsingAlias(TownTableMap::COL_ID, $id, $comparison);
     }
 
     /**
@@ -287,7 +287,7 @@ abstract class PublisherQuery extends ModelCriteria
      *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildPublisherQuery The current query, for fluid interface
+     * @return $this|ChildTownQuery The current query, for fluid interface
      */
     public function filterByName($name = null, $comparison = null)
     {
@@ -300,44 +300,44 @@ abstract class PublisherQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(PublisherTableMap::COL_NAME, $name, $comparison);
+        return $this->addUsingAlias(TownTableMap::COL_NAME, $name, $comparison);
     }
 
     /**
-     * Filter the query by a related \ANSR\Propel\Entity\Book object
+     * Filter the query by a related \ANSR\Propel\Entity\Supermarket object
      *
-     * @param \ANSR\Propel\Entity\Book|ObjectCollection $book the related object to use as filter
+     * @param \ANSR\Propel\Entity\Supermarket|ObjectCollection $supermarket the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return ChildPublisherQuery The current query, for fluid interface
+     * @return ChildTownQuery The current query, for fluid interface
      */
-    public function filterByBook($book, $comparison = null)
+    public function filterBySupermarket($supermarket, $comparison = null)
     {
-        if ($book instanceof \ANSR\Propel\Entity\Book) {
+        if ($supermarket instanceof \ANSR\Propel\Entity\Supermarket) {
             return $this
-                ->addUsingAlias(PublisherTableMap::COL_ID, $book->getPublisherId(), $comparison);
-        } elseif ($book instanceof ObjectCollection) {
+                ->addUsingAlias(TownTableMap::COL_ID, $supermarket->getTownId(), $comparison);
+        } elseif ($supermarket instanceof ObjectCollection) {
             return $this
-                ->useBookQuery()
-                ->filterByPrimaryKeys($book->getPrimaryKeys())
+                ->useSupermarketQuery()
+                ->filterByPrimaryKeys($supermarket->getPrimaryKeys())
                 ->endUse();
         } else {
-            throw new PropelException('filterByBook() only accepts arguments of type \ANSR\Propel\Entity\Book or Collection');
+            throw new PropelException('filterBySupermarket() only accepts arguments of type \ANSR\Propel\Entity\Supermarket or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the Book relation
+     * Adds a JOIN clause to the query using the Supermarket relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return $this|ChildPublisherQuery The current query, for fluid interface
+     * @return $this|ChildTownQuery The current query, for fluid interface
      */
-    public function joinBook($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinSupermarket($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Book');
+        $relationMap = $tableMap->getRelation('Supermarket');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -352,14 +352,14 @@ abstract class PublisherQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'Book');
+            $this->addJoinObject($join, 'Supermarket');
         }
 
         return $this;
     }
 
     /**
-     * Use the Book relation Book object
+     * Use the Supermarket relation Supermarket object
      *
      * @see useQuery()
      *
@@ -367,33 +367,33 @@ abstract class PublisherQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return \ANSR\Propel\Entity\BookQuery A secondary query class using the current class as primary query
+     * @return \ANSR\Propel\Entity\SupermarketQuery A secondary query class using the current class as primary query
      */
-    public function useBookQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useSupermarketQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinBook($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Book', '\ANSR\Propel\Entity\BookQuery');
+            ->joinSupermarket($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Supermarket', '\ANSR\Propel\Entity\SupermarketQuery');
     }
 
     /**
      * Exclude object from result
      *
-     * @param   ChildPublisher $publisher Object to remove from the list of results
+     * @param   ChildTown $town Object to remove from the list of results
      *
-     * @return $this|ChildPublisherQuery The current query, for fluid interface
+     * @return $this|ChildTownQuery The current query, for fluid interface
      */
-    public function prune($publisher = null)
+    public function prune($town = null)
     {
-        if ($publisher) {
-            $this->addUsingAlias(PublisherTableMap::COL_ID, $publisher->getId(), Criteria::NOT_EQUAL);
+        if ($town) {
+            $this->addUsingAlias(TownTableMap::COL_ID, $town->getId(), Criteria::NOT_EQUAL);
         }
 
         return $this;
     }
 
     /**
-     * Deletes all rows from the publisher table.
+     * Deletes all rows from the towns table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
@@ -401,7 +401,7 @@ abstract class PublisherQuery extends ModelCriteria
     public function doDeleteAll(ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(PublisherTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(TownTableMap::DATABASE_NAME);
         }
 
         // use transaction because $criteria could contain info
@@ -412,8 +412,8 @@ abstract class PublisherQuery extends ModelCriteria
             // Because this db requires some delete cascade/set null emulation, we have to
             // clear the cached instance *after* the emulation has happened (since
             // instances get re-added by the select statement contained therein).
-            PublisherTableMap::clearInstancePool();
-            PublisherTableMap::clearRelatedInstancePool();
+            TownTableMap::clearInstancePool();
+            TownTableMap::clearRelatedInstancePool();
 
             return $affectedRows;
         });
@@ -431,26 +431,26 @@ abstract class PublisherQuery extends ModelCriteria
     public function delete(ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(PublisherTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(TownTableMap::DATABASE_NAME);
         }
 
         $criteria = $this;
 
         // Set the correct dbName
-        $criteria->setDbName(PublisherTableMap::DATABASE_NAME);
+        $criteria->setDbName(TownTableMap::DATABASE_NAME);
 
         // use transaction because $criteria could contain info
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
 
-            PublisherTableMap::removeInstanceFromPool($criteria);
+            TownTableMap::removeInstanceFromPool($criteria);
 
             $affectedRows += ModelCriteria::delete($con);
-            PublisherTableMap::clearRelatedInstancePool();
+            TownTableMap::clearRelatedInstancePool();
 
             return $affectedRows;
         });
     }
 
-} // PublisherQuery
+} // TownQuery

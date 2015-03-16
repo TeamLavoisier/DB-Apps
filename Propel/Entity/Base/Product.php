@@ -4,11 +4,15 @@ namespace ANSR\Propel\Entity\Base;
 
 use \Exception;
 use \PDO;
-use ANSR\Propel\Entity\Book as ChildBook;
-use ANSR\Propel\Entity\BookQuery as ChildBookQuery;
-use ANSR\Propel\Entity\Publisher as ChildPublisher;
-use ANSR\Propel\Entity\PublisherQuery as ChildPublisherQuery;
-use ANSR\Propel\Entity\Map\PublisherTableMap;
+use ANSR\Propel\Entity\Measure as ChildMeasure;
+use ANSR\Propel\Entity\MeasureQuery as ChildMeasureQuery;
+use ANSR\Propel\Entity\Product as ChildProduct;
+use ANSR\Propel\Entity\ProductQuery as ChildProductQuery;
+use ANSR\Propel\Entity\Sale as ChildSale;
+use ANSR\Propel\Entity\SaleQuery as ChildSaleQuery;
+use ANSR\Propel\Entity\Vendor as ChildVendor;
+use ANSR\Propel\Entity\VendorQuery as ChildVendorQuery;
+use ANSR\Propel\Entity\Map\ProductTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -23,18 +27,18 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
 
 /**
- * Base class that represents a row from the 'publisher' table.
+ * Base class that represents a row from the 'products' table.
  *
  *
  *
 * @package    propel.generator.ANSR.Propel.Entity.Base
 */
-abstract class Publisher implements ActiveRecordInterface
+abstract class Product implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\ANSR\\Propel\\Entity\\Map\\PublisherTableMap';
+    const TABLE_MAP = '\\ANSR\\Propel\\Entity\\Map\\ProductTableMap';
 
 
     /**
@@ -76,10 +80,38 @@ abstract class Publisher implements ActiveRecordInterface
     protected $name;
 
     /**
-     * @var        ObjectCollection|ChildBook[] Collection to store aggregation of ChildBook objects.
+     * The value for the tax field.
+     * @var        int
      */
-    protected $collBooks;
-    protected $collBooksPartial;
+    protected $tax;
+
+    /**
+     * The value for the vendor_id field.
+     * @var        int
+     */
+    protected $vendor_id;
+
+    /**
+     * The value for the measure_id field.
+     * @var        int
+     */
+    protected $measure_id;
+
+    /**
+     * @var        ChildVendor
+     */
+    protected $aVendor;
+
+    /**
+     * @var        ChildMeasure
+     */
+    protected $aMeasure;
+
+    /**
+     * @var        ObjectCollection|ChildSale[] Collection to store aggregation of ChildSale objects.
+     */
+    protected $collSales;
+    protected $collSalesPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -91,12 +123,12 @@ abstract class Publisher implements ActiveRecordInterface
 
     /**
      * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildBook[]
+     * @var ObjectCollection|ChildSale[]
      */
-    protected $booksScheduledForDeletion = null;
+    protected $salesScheduledForDeletion = null;
 
     /**
-     * Initializes internal state of ANSR\Propel\Entity\Base\Publisher object.
+     * Initializes internal state of ANSR\Propel\Entity\Base\Product object.
      */
     public function __construct()
     {
@@ -191,9 +223,9 @@ abstract class Publisher implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>Publisher</code> instance.  If
-     * <code>obj</code> is an instance of <code>Publisher</code>, delegates to
-     * <code>equals(Publisher)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>Product</code> instance.  If
+     * <code>obj</code> is an instance of <code>Product</code>, delegates to
+     * <code>equals(Product)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -259,7 +291,7 @@ abstract class Publisher implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Publisher The current object, for fluid interface
+     * @return $this|Product The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -333,10 +365,40 @@ abstract class Publisher implements ActiveRecordInterface
     }
 
     /**
+     * Get the [tax] column value.
+     *
+     * @return int
+     */
+    public function getTax()
+    {
+        return $this->tax;
+    }
+
+    /**
+     * Get the [vendor_id] column value.
+     *
+     * @return int
+     */
+    public function getVendorId()
+    {
+        return $this->vendor_id;
+    }
+
+    /**
+     * Get the [measure_id] column value.
+     *
+     * @return int
+     */
+    public function getMeasureId()
+    {
+        return $this->measure_id;
+    }
+
+    /**
      * Set the value of [id] column.
      *
      * @param int $v new value
-     * @return $this|\ANSR\Propel\Entity\Publisher The current object (for fluent API support)
+     * @return $this|\ANSR\Propel\Entity\Product The current object (for fluent API support)
      */
     public function setId($v)
     {
@@ -346,7 +408,7 @@ abstract class Publisher implements ActiveRecordInterface
 
         if ($this->id !== $v) {
             $this->id = $v;
-            $this->modifiedColumns[PublisherTableMap::COL_ID] = true;
+            $this->modifiedColumns[ProductTableMap::COL_ID] = true;
         }
 
         return $this;
@@ -356,7 +418,7 @@ abstract class Publisher implements ActiveRecordInterface
      * Set the value of [name] column.
      *
      * @param string $v new value
-     * @return $this|\ANSR\Propel\Entity\Publisher The current object (for fluent API support)
+     * @return $this|\ANSR\Propel\Entity\Product The current object (for fluent API support)
      */
     public function setName($v)
     {
@@ -366,11 +428,79 @@ abstract class Publisher implements ActiveRecordInterface
 
         if ($this->name !== $v) {
             $this->name = $v;
-            $this->modifiedColumns[PublisherTableMap::COL_NAME] = true;
+            $this->modifiedColumns[ProductTableMap::COL_NAME] = true;
         }
 
         return $this;
     } // setName()
+
+    /**
+     * Set the value of [tax] column.
+     *
+     * @param int $v new value
+     * @return $this|\ANSR\Propel\Entity\Product The current object (for fluent API support)
+     */
+    public function setTax($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->tax !== $v) {
+            $this->tax = $v;
+            $this->modifiedColumns[ProductTableMap::COL_TAX] = true;
+        }
+
+        return $this;
+    } // setTax()
+
+    /**
+     * Set the value of [vendor_id] column.
+     *
+     * @param int $v new value
+     * @return $this|\ANSR\Propel\Entity\Product The current object (for fluent API support)
+     */
+    public function setVendorId($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->vendor_id !== $v) {
+            $this->vendor_id = $v;
+            $this->modifiedColumns[ProductTableMap::COL_VENDOR_ID] = true;
+        }
+
+        if ($this->aVendor !== null && $this->aVendor->getId() !== $v) {
+            $this->aVendor = null;
+        }
+
+        return $this;
+    } // setVendorId()
+
+    /**
+     * Set the value of [measure_id] column.
+     *
+     * @param int $v new value
+     * @return $this|\ANSR\Propel\Entity\Product The current object (for fluent API support)
+     */
+    public function setMeasureId($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->measure_id !== $v) {
+            $this->measure_id = $v;
+            $this->modifiedColumns[ProductTableMap::COL_MEASURE_ID] = true;
+        }
+
+        if ($this->aMeasure !== null && $this->aMeasure->getId() !== $v) {
+            $this->aMeasure = null;
+        }
+
+        return $this;
+    } // setMeasureId()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -408,11 +538,20 @@ abstract class Publisher implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : PublisherTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : ProductTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
             $this->id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : PublisherTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : ProductTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
             $this->name = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : ProductTableMap::translateFieldName('Tax', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->tax = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : ProductTableMap::translateFieldName('VendorId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->vendor_id = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : ProductTableMap::translateFieldName('MeasureId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->measure_id = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -421,10 +560,10 @@ abstract class Publisher implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 2; // 2 = PublisherTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 5; // 5 = ProductTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\ANSR\\Propel\\Entity\\Publisher'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\ANSR\\Propel\\Entity\\Product'), 0, $e);
         }
     }
 
@@ -443,6 +582,12 @@ abstract class Publisher implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
+        if ($this->aVendor !== null && $this->vendor_id !== $this->aVendor->getId()) {
+            $this->aVendor = null;
+        }
+        if ($this->aMeasure !== null && $this->measure_id !== $this->aMeasure->getId()) {
+            $this->aMeasure = null;
+        }
     } // ensureConsistency
 
     /**
@@ -466,13 +611,13 @@ abstract class Publisher implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(PublisherTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(ProductTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildPublisherQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildProductQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -482,7 +627,9 @@ abstract class Publisher implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->collBooks = null;
+            $this->aVendor = null;
+            $this->aMeasure = null;
+            $this->collSales = null;
 
         } // if (deep)
     }
@@ -493,8 +640,8 @@ abstract class Publisher implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see Publisher::setDeleted()
-     * @see Publisher::isDeleted()
+     * @see Product::setDeleted()
+     * @see Product::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -503,11 +650,11 @@ abstract class Publisher implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(PublisherTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(ProductTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildPublisherQuery::create()
+            $deleteQuery = ChildProductQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -538,7 +685,7 @@ abstract class Publisher implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(PublisherTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(ProductTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -557,7 +704,7 @@ abstract class Publisher implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                PublisherTableMap::addInstanceToPool($this);
+                ProductTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -583,6 +730,25 @@ abstract class Publisher implements ActiveRecordInterface
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
 
+            // We call the save method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aVendor !== null) {
+                if ($this->aVendor->isModified() || $this->aVendor->isNew()) {
+                    $affectedRows += $this->aVendor->save($con);
+                }
+                $this->setVendor($this->aVendor);
+            }
+
+            if ($this->aMeasure !== null) {
+                if ($this->aMeasure->isModified() || $this->aMeasure->isNew()) {
+                    $affectedRows += $this->aMeasure->save($con);
+                }
+                $this->setMeasure($this->aMeasure);
+            }
+
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -594,17 +760,17 @@ abstract class Publisher implements ActiveRecordInterface
                 $this->resetModified();
             }
 
-            if ($this->booksScheduledForDeletion !== null) {
-                if (!$this->booksScheduledForDeletion->isEmpty()) {
-                    \ANSR\Propel\Entity\BookQuery::create()
-                        ->filterByPrimaryKeys($this->booksScheduledForDeletion->getPrimaryKeys(false))
+            if ($this->salesScheduledForDeletion !== null) {
+                if (!$this->salesScheduledForDeletion->isEmpty()) {
+                    \ANSR\Propel\Entity\SaleQuery::create()
+                        ->filterByPrimaryKeys($this->salesScheduledForDeletion->getPrimaryKeys(false))
                         ->delete($con);
-                    $this->booksScheduledForDeletion = null;
+                    $this->salesScheduledForDeletion = null;
                 }
             }
 
-            if ($this->collBooks !== null) {
-                foreach ($this->collBooks as $referrerFK) {
+            if ($this->collSales !== null) {
+                foreach ($this->collSales as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -631,21 +797,30 @@ abstract class Publisher implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[PublisherTableMap::COL_ID] = true;
+        $this->modifiedColumns[ProductTableMap::COL_ID] = true;
         if (null !== $this->id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . PublisherTableMap::COL_ID . ')');
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . ProductTableMap::COL_ID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(PublisherTableMap::COL_ID)) {
+        if ($this->isColumnModified(ProductTableMap::COL_ID)) {
             $modifiedColumns[':p' . $index++]  = 'id';
         }
-        if ($this->isColumnModified(PublisherTableMap::COL_NAME)) {
+        if ($this->isColumnModified(ProductTableMap::COL_NAME)) {
             $modifiedColumns[':p' . $index++]  = 'name';
+        }
+        if ($this->isColumnModified(ProductTableMap::COL_TAX)) {
+            $modifiedColumns[':p' . $index++]  = 'tax';
+        }
+        if ($this->isColumnModified(ProductTableMap::COL_VENDOR_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'vendor_id';
+        }
+        if ($this->isColumnModified(ProductTableMap::COL_MEASURE_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'measure_id';
         }
 
         $sql = sprintf(
-            'INSERT INTO publisher (%s) VALUES (%s)',
+            'INSERT INTO products (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -659,6 +834,15 @@ abstract class Publisher implements ActiveRecordInterface
                         break;
                     case 'name':
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
+                        break;
+                    case 'tax':
+                        $stmt->bindValue($identifier, $this->tax, PDO::PARAM_INT);
+                        break;
+                    case 'vendor_id':
+                        $stmt->bindValue($identifier, $this->vendor_id, PDO::PARAM_INT);
+                        break;
+                    case 'measure_id':
+                        $stmt->bindValue($identifier, $this->measure_id, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -706,7 +890,7 @@ abstract class Publisher implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = PublisherTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = ProductTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -727,6 +911,15 @@ abstract class Publisher implements ActiveRecordInterface
                 break;
             case 1:
                 return $this->getName();
+                break;
+            case 2:
+                return $this->getTax();
+                break;
+            case 3:
+                return $this->getVendorId();
+                break;
+            case 4:
+                return $this->getMeasureId();
                 break;
             default:
                 return null;
@@ -752,14 +945,17 @@ abstract class Publisher implements ActiveRecordInterface
     public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
-        if (isset($alreadyDumpedObjects['Publisher'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['Product'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Publisher'][$this->hashCode()] = true;
-        $keys = PublisherTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['Product'][$this->hashCode()] = true;
+        $keys = ProductTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getId(),
             $keys[1] => $this->getName(),
+            $keys[2] => $this->getTax(),
+            $keys[3] => $this->getVendorId(),
+            $keys[4] => $this->getMeasureId(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -767,20 +963,50 @@ abstract class Publisher implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->collBooks) {
+            if (null !== $this->aVendor) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'books';
+                        $key = 'vendor';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'books';
+                        $key = 'vendors';
                         break;
                     default:
-                        $key = 'Books';
+                        $key = 'Vendor';
                 }
 
-                $result[$key] = $this->collBooks->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+                $result[$key] = $this->aVendor->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->aMeasure) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'measure';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'measures';
+                        break;
+                    default:
+                        $key = 'Measure';
+                }
+
+                $result[$key] = $this->aMeasure->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->collSales) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'sales';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'saless';
+                        break;
+                    default:
+                        $key = 'Sales';
+                }
+
+                $result[$key] = $this->collSales->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -796,11 +1022,11 @@ abstract class Publisher implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\ANSR\Propel\Entity\Publisher
+     * @return $this|\ANSR\Propel\Entity\Product
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = PublisherTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = ProductTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -811,7 +1037,7 @@ abstract class Publisher implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\ANSR\Propel\Entity\Publisher
+     * @return $this|\ANSR\Propel\Entity\Product
      */
     public function setByPosition($pos, $value)
     {
@@ -821,6 +1047,15 @@ abstract class Publisher implements ActiveRecordInterface
                 break;
             case 1:
                 $this->setName($value);
+                break;
+            case 2:
+                $this->setTax($value);
+                break;
+            case 3:
+                $this->setVendorId($value);
+                break;
+            case 4:
+                $this->setMeasureId($value);
                 break;
         } // switch()
 
@@ -846,13 +1081,22 @@ abstract class Publisher implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = PublisherTableMap::getFieldNames($keyType);
+        $keys = ProductTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
             $this->setId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
             $this->setName($arr[$keys[1]]);
+        }
+        if (array_key_exists($keys[2], $arr)) {
+            $this->setTax($arr[$keys[2]]);
+        }
+        if (array_key_exists($keys[3], $arr)) {
+            $this->setVendorId($arr[$keys[3]]);
+        }
+        if (array_key_exists($keys[4], $arr)) {
+            $this->setMeasureId($arr[$keys[4]]);
         }
     }
 
@@ -873,7 +1117,7 @@ abstract class Publisher implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\ANSR\Propel\Entity\Publisher The current object, for fluid interface
+     * @return $this|\ANSR\Propel\Entity\Product The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -893,13 +1137,22 @@ abstract class Publisher implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(PublisherTableMap::DATABASE_NAME);
+        $criteria = new Criteria(ProductTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(PublisherTableMap::COL_ID)) {
-            $criteria->add(PublisherTableMap::COL_ID, $this->id);
+        if ($this->isColumnModified(ProductTableMap::COL_ID)) {
+            $criteria->add(ProductTableMap::COL_ID, $this->id);
         }
-        if ($this->isColumnModified(PublisherTableMap::COL_NAME)) {
-            $criteria->add(PublisherTableMap::COL_NAME, $this->name);
+        if ($this->isColumnModified(ProductTableMap::COL_NAME)) {
+            $criteria->add(ProductTableMap::COL_NAME, $this->name);
+        }
+        if ($this->isColumnModified(ProductTableMap::COL_TAX)) {
+            $criteria->add(ProductTableMap::COL_TAX, $this->tax);
+        }
+        if ($this->isColumnModified(ProductTableMap::COL_VENDOR_ID)) {
+            $criteria->add(ProductTableMap::COL_VENDOR_ID, $this->vendor_id);
+        }
+        if ($this->isColumnModified(ProductTableMap::COL_MEASURE_ID)) {
+            $criteria->add(ProductTableMap::COL_MEASURE_ID, $this->measure_id);
         }
 
         return $criteria;
@@ -917,8 +1170,8 @@ abstract class Publisher implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildPublisherQuery::create();
-        $criteria->add(PublisherTableMap::COL_ID, $this->id);
+        $criteria = ChildProductQuery::create();
+        $criteria->add(ProductTableMap::COL_ID, $this->id);
 
         return $criteria;
     }
@@ -980,7 +1233,7 @@ abstract class Publisher implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \ANSR\Propel\Entity\Publisher (or compatible) type.
+     * @param      object $copyObj An object of \ANSR\Propel\Entity\Product (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
@@ -988,15 +1241,18 @@ abstract class Publisher implements ActiveRecordInterface
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
         $copyObj->setName($this->getName());
+        $copyObj->setTax($this->getTax());
+        $copyObj->setVendorId($this->getVendorId());
+        $copyObj->setMeasureId($this->getMeasureId());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
             // the getter/setter methods for fkey referrer objects.
             $copyObj->setNew(false);
 
-            foreach ($this->getBooks() as $relObj) {
+            foreach ($this->getSales() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addBook($relObj->copy($deepCopy));
+                    $copyObj->addSale($relObj->copy($deepCopy));
                 }
             }
 
@@ -1017,7 +1273,7 @@ abstract class Publisher implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \ANSR\Propel\Entity\Publisher Clone of current object.
+     * @return \ANSR\Propel\Entity\Product Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1028,6 +1284,108 @@ abstract class Publisher implements ActiveRecordInterface
         $this->copyInto($copyObj, $deepCopy);
 
         return $copyObj;
+    }
+
+    /**
+     * Declares an association between this object and a ChildVendor object.
+     *
+     * @param  ChildVendor $v
+     * @return $this|\ANSR\Propel\Entity\Product The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setVendor(ChildVendor $v = null)
+    {
+        if ($v === null) {
+            $this->setVendorId(NULL);
+        } else {
+            $this->setVendorId($v->getId());
+        }
+
+        $this->aVendor = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildVendor object, it will not be re-added.
+        if ($v !== null) {
+            $v->addProduct($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildVendor object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildVendor The associated ChildVendor object.
+     * @throws PropelException
+     */
+    public function getVendor(ConnectionInterface $con = null)
+    {
+        if ($this->aVendor === null && ($this->vendor_id !== null)) {
+            $this->aVendor = ChildVendorQuery::create()->findPk($this->vendor_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aVendor->addProducts($this);
+             */
+        }
+
+        return $this->aVendor;
+    }
+
+    /**
+     * Declares an association between this object and a ChildMeasure object.
+     *
+     * @param  ChildMeasure $v
+     * @return $this|\ANSR\Propel\Entity\Product The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setMeasure(ChildMeasure $v = null)
+    {
+        if ($v === null) {
+            $this->setMeasureId(NULL);
+        } else {
+            $this->setMeasureId($v->getId());
+        }
+
+        $this->aMeasure = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildMeasure object, it will not be re-added.
+        if ($v !== null) {
+            $v->addProduct($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildMeasure object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildMeasure The associated ChildMeasure object.
+     * @throws PropelException
+     */
+    public function getMeasure(ConnectionInterface $con = null)
+    {
+        if ($this->aMeasure === null && ($this->measure_id !== null)) {
+            $this->aMeasure = ChildMeasureQuery::create()->findPk($this->measure_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aMeasure->addProducts($this);
+             */
+        }
+
+        return $this->aMeasure;
     }
 
 
@@ -1041,37 +1399,37 @@ abstract class Publisher implements ActiveRecordInterface
      */
     public function initRelation($relationName)
     {
-        if ('Book' == $relationName) {
-            return $this->initBooks();
+        if ('Sale' == $relationName) {
+            return $this->initSales();
         }
     }
 
     /**
-     * Clears out the collBooks collection
+     * Clears out the collSales collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
      * them to be refetched by subsequent calls to accessor method.
      *
      * @return void
-     * @see        addBooks()
+     * @see        addSales()
      */
-    public function clearBooks()
+    public function clearSales()
     {
-        $this->collBooks = null; // important to set this to NULL since that means it is uninitialized
+        $this->collSales = null; // important to set this to NULL since that means it is uninitialized
     }
 
     /**
-     * Reset is the collBooks collection loaded partially.
+     * Reset is the collSales collection loaded partially.
      */
-    public function resetPartialBooks($v = true)
+    public function resetPartialSales($v = true)
     {
-        $this->collBooksPartial = $v;
+        $this->collSalesPartial = $v;
     }
 
     /**
-     * Initializes the collBooks collection.
+     * Initializes the collSales collection.
      *
-     * By default this just sets the collBooks collection to an empty array (like clearcollBooks());
+     * By default this just sets the collSales collection to an empty array (like clearcollSales());
      * however, you may wish to override this method in your stub class to provide setting appropriate
      * to your application -- for example, setting the initial array to the values stored in database.
      *
@@ -1080,185 +1438,185 @@ abstract class Publisher implements ActiveRecordInterface
      *
      * @return void
      */
-    public function initBooks($overrideExisting = true)
+    public function initSales($overrideExisting = true)
     {
-        if (null !== $this->collBooks && !$overrideExisting) {
+        if (null !== $this->collSales && !$overrideExisting) {
             return;
         }
-        $this->collBooks = new ObjectCollection();
-        $this->collBooks->setModel('\ANSR\Propel\Entity\Book');
+        $this->collSales = new ObjectCollection();
+        $this->collSales->setModel('\ANSR\Propel\Entity\Sale');
     }
 
     /**
-     * Gets an array of ChildBook objects which contain a foreign key that references this object.
+     * Gets an array of ChildSale objects which contain a foreign key that references this object.
      *
      * If the $criteria is not null, it is used to always fetch the results from the database.
      * Otherwise the results are fetched from the database the first time, then cached.
      * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildPublisher is new, it will return
+     * If this ChildProduct is new, it will return
      * an empty collection or the current collection; the criteria is ignored on a new object.
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildBook[] List of ChildBook objects
+     * @return ObjectCollection|ChildSale[] List of ChildSale objects
      * @throws PropelException
      */
-    public function getBooks(Criteria $criteria = null, ConnectionInterface $con = null)
+    public function getSales(Criteria $criteria = null, ConnectionInterface $con = null)
     {
-        $partial = $this->collBooksPartial && !$this->isNew();
-        if (null === $this->collBooks || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collBooks) {
+        $partial = $this->collSalesPartial && !$this->isNew();
+        if (null === $this->collSales || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collSales) {
                 // return empty collection
-                $this->initBooks();
+                $this->initSales();
             } else {
-                $collBooks = ChildBookQuery::create(null, $criteria)
-                    ->filterByPublisher($this)
+                $collSales = ChildSaleQuery::create(null, $criteria)
+                    ->filterByProduct($this)
                     ->find($con);
 
                 if (null !== $criteria) {
-                    if (false !== $this->collBooksPartial && count($collBooks)) {
-                        $this->initBooks(false);
+                    if (false !== $this->collSalesPartial && count($collSales)) {
+                        $this->initSales(false);
 
-                        foreach ($collBooks as $obj) {
-                            if (false == $this->collBooks->contains($obj)) {
-                                $this->collBooks->append($obj);
+                        foreach ($collSales as $obj) {
+                            if (false == $this->collSales->contains($obj)) {
+                                $this->collSales->append($obj);
                             }
                         }
 
-                        $this->collBooksPartial = true;
+                        $this->collSalesPartial = true;
                     }
 
-                    return $collBooks;
+                    return $collSales;
                 }
 
-                if ($partial && $this->collBooks) {
-                    foreach ($this->collBooks as $obj) {
+                if ($partial && $this->collSales) {
+                    foreach ($this->collSales as $obj) {
                         if ($obj->isNew()) {
-                            $collBooks[] = $obj;
+                            $collSales[] = $obj;
                         }
                     }
                 }
 
-                $this->collBooks = $collBooks;
-                $this->collBooksPartial = false;
+                $this->collSales = $collSales;
+                $this->collSalesPartial = false;
             }
         }
 
-        return $this->collBooks;
+        return $this->collSales;
     }
 
     /**
-     * Sets a collection of ChildBook objects related by a one-to-many relationship
+     * Sets a collection of ChildSale objects related by a one-to-many relationship
      * to the current object.
      * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
      * and new objects from the given Propel collection.
      *
-     * @param      Collection $books A Propel collection.
+     * @param      Collection $sales A Propel collection.
      * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildPublisher The current object (for fluent API support)
+     * @return $this|ChildProduct The current object (for fluent API support)
      */
-    public function setBooks(Collection $books, ConnectionInterface $con = null)
+    public function setSales(Collection $sales, ConnectionInterface $con = null)
     {
-        /** @var ChildBook[] $booksToDelete */
-        $booksToDelete = $this->getBooks(new Criteria(), $con)->diff($books);
+        /** @var ChildSale[] $salesToDelete */
+        $salesToDelete = $this->getSales(new Criteria(), $con)->diff($sales);
 
 
-        $this->booksScheduledForDeletion = $booksToDelete;
+        $this->salesScheduledForDeletion = $salesToDelete;
 
-        foreach ($booksToDelete as $bookRemoved) {
-            $bookRemoved->setPublisher(null);
+        foreach ($salesToDelete as $saleRemoved) {
+            $saleRemoved->setProduct(null);
         }
 
-        $this->collBooks = null;
-        foreach ($books as $book) {
-            $this->addBook($book);
+        $this->collSales = null;
+        foreach ($sales as $sale) {
+            $this->addSale($sale);
         }
 
-        $this->collBooks = $books;
-        $this->collBooksPartial = false;
+        $this->collSales = $sales;
+        $this->collSalesPartial = false;
 
         return $this;
     }
 
     /**
-     * Returns the number of related Book objects.
+     * Returns the number of related Sale objects.
      *
      * @param      Criteria $criteria
      * @param      boolean $distinct
      * @param      ConnectionInterface $con
-     * @return int             Count of related Book objects.
+     * @return int             Count of related Sale objects.
      * @throws PropelException
      */
-    public function countBooks(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    public function countSales(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
     {
-        $partial = $this->collBooksPartial && !$this->isNew();
-        if (null === $this->collBooks || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collBooks) {
+        $partial = $this->collSalesPartial && !$this->isNew();
+        if (null === $this->collSales || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collSales) {
                 return 0;
             }
 
             if ($partial && !$criteria) {
-                return count($this->getBooks());
+                return count($this->getSales());
             }
 
-            $query = ChildBookQuery::create(null, $criteria);
+            $query = ChildSaleQuery::create(null, $criteria);
             if ($distinct) {
                 $query->distinct();
             }
 
             return $query
-                ->filterByPublisher($this)
+                ->filterByProduct($this)
                 ->count($con);
         }
 
-        return count($this->collBooks);
+        return count($this->collSales);
     }
 
     /**
-     * Method called to associate a ChildBook object to this object
-     * through the ChildBook foreign key attribute.
+     * Method called to associate a ChildSale object to this object
+     * through the ChildSale foreign key attribute.
      *
-     * @param  ChildBook $l ChildBook
-     * @return $this|\ANSR\Propel\Entity\Publisher The current object (for fluent API support)
+     * @param  ChildSale $l ChildSale
+     * @return $this|\ANSR\Propel\Entity\Product The current object (for fluent API support)
      */
-    public function addBook(ChildBook $l)
+    public function addSale(ChildSale $l)
     {
-        if ($this->collBooks === null) {
-            $this->initBooks();
-            $this->collBooksPartial = true;
+        if ($this->collSales === null) {
+            $this->initSales();
+            $this->collSalesPartial = true;
         }
 
-        if (!$this->collBooks->contains($l)) {
-            $this->doAddBook($l);
+        if (!$this->collSales->contains($l)) {
+            $this->doAddSale($l);
         }
 
         return $this;
     }
 
     /**
-     * @param ChildBook $book The ChildBook object to add.
+     * @param ChildSale $sale The ChildSale object to add.
      */
-    protected function doAddBook(ChildBook $book)
+    protected function doAddSale(ChildSale $sale)
     {
-        $this->collBooks[]= $book;
-        $book->setPublisher($this);
+        $this->collSales[]= $sale;
+        $sale->setProduct($this);
     }
 
     /**
-     * @param  ChildBook $book The ChildBook object to remove.
-     * @return $this|ChildPublisher The current object (for fluent API support)
+     * @param  ChildSale $sale The ChildSale object to remove.
+     * @return $this|ChildProduct The current object (for fluent API support)
      */
-    public function removeBook(ChildBook $book)
+    public function removeSale(ChildSale $sale)
     {
-        if ($this->getBooks()->contains($book)) {
-            $pos = $this->collBooks->search($book);
-            $this->collBooks->remove($pos);
-            if (null === $this->booksScheduledForDeletion) {
-                $this->booksScheduledForDeletion = clone $this->collBooks;
-                $this->booksScheduledForDeletion->clear();
+        if ($this->getSales()->contains($sale)) {
+            $pos = $this->collSales->search($sale);
+            $this->collSales->remove($pos);
+            if (null === $this->salesScheduledForDeletion) {
+                $this->salesScheduledForDeletion = clone $this->collSales;
+                $this->salesScheduledForDeletion->clear();
             }
-            $this->booksScheduledForDeletion[]= clone $book;
-            $book->setPublisher(null);
+            $this->salesScheduledForDeletion[]= clone $sale;
+            $sale->setProduct(null);
         }
 
         return $this;
@@ -1268,25 +1626,25 @@ abstract class Publisher implements ActiveRecordInterface
     /**
      * If this collection has already been initialized with
      * an identical criteria, it returns the collection.
-     * Otherwise if this Publisher is new, it will return
-     * an empty collection; or if this Publisher has previously
-     * been saved, it will retrieve related Books from storage.
+     * Otherwise if this Product is new, it will return
+     * an empty collection; or if this Product has previously
+     * been saved, it will retrieve related Sales from storage.
      *
      * This method is protected by default in order to keep the public
      * api reasonable.  You can provide public methods for those you
-     * actually need in Publisher.
+     * actually need in Product.
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildBook[] List of ChildBook objects
+     * @return ObjectCollection|ChildSale[] List of ChildSale objects
      */
-    public function getBooksJoinAuthor(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    public function getSalesJoinSupermarket(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
-        $query = ChildBookQuery::create(null, $criteria);
-        $query->joinWith('Author', $joinBehavior);
+        $query = ChildSaleQuery::create(null, $criteria);
+        $query->joinWith('Supermarket', $joinBehavior);
 
-        return $this->getBooks($query, $con);
+        return $this->getSales($query, $con);
     }
 
     /**
@@ -1296,8 +1654,17 @@ abstract class Publisher implements ActiveRecordInterface
      */
     public function clear()
     {
+        if (null !== $this->aVendor) {
+            $this->aVendor->removeProduct($this);
+        }
+        if (null !== $this->aMeasure) {
+            $this->aMeasure->removeProduct($this);
+        }
         $this->id = null;
         $this->name = null;
+        $this->tax = null;
+        $this->vendor_id = null;
+        $this->measure_id = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1316,14 +1683,16 @@ abstract class Publisher implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
-            if ($this->collBooks) {
-                foreach ($this->collBooks as $o) {
+            if ($this->collSales) {
+                foreach ($this->collSales as $o) {
                     $o->clearAllReferences($deep);
                 }
             }
         } // if ($deep)
 
-        $this->collBooks = null;
+        $this->collSales = null;
+        $this->aVendor = null;
+        $this->aMeasure = null;
     }
 
     /**
@@ -1333,7 +1702,7 @@ abstract class Publisher implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(PublisherTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(ProductTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

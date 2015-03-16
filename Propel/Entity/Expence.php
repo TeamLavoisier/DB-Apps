@@ -2,10 +2,10 @@
 
 namespace ANSR\Propel\Entity;
 
-use ANSR\Propel\Entity\Base\PublisherQuery as BasePublisherQuery;
+use ANSR\Propel\Entity\Base\Expence as BaseExpence;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'publisher' table.
+ * Skeleton subclass for representing a row from the 'expences' table.
  *
  *
  *
@@ -14,7 +14,7 @@ use ANSR\Propel\Entity\Base\PublisherQuery as BasePublisherQuery;
  * long as it does not already exist in the output directory.
  *
  */
-class PublisherQuery extends BasePublisherQuery
+class Expence extends BaseExpence
 {
 
 }

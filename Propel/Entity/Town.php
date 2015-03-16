@@ -2,10 +2,10 @@
 
 namespace ANSR\Propel\Entity;
 
-use ANSR\Propel\Entity\Base\AuthorQuery as BaseAuthorQuery;
+use ANSR\Propel\Entity\Base\Town as BaseTown;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'author' table.
+ * Skeleton subclass for representing a row from the 'towns' table.
  *
  *
  *
@@ -14,7 +14,7 @@ use ANSR\Propel\Entity\Base\AuthorQuery as BaseAuthorQuery;
  * long as it does not already exist in the output directory.
  *
  */
-class AuthorQuery extends BaseAuthorQuery
+class Town extends BaseTown
 {
 
 }

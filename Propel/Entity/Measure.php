@@ -2,10 +2,10 @@
 
 namespace ANSR\Propel\Entity;
 
-use ANSR\Propel\Entity\Base\BookQuery as BaseBookQuery;
+use ANSR\Propel\Entity\Base\Measure as BaseMeasure;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'book' table.
+ * Skeleton subclass for representing a row from the 'measures' table.
  *
  *
  *
@@ -14,7 +14,7 @@ use ANSR\Propel\Entity\Base\BookQuery as BaseBookQuery;
  * long as it does not already exist in the output directory.
  *
  */
-class BookQuery extends BaseBookQuery
+class Measure extends BaseMeasure
 {
 
 }

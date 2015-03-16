@@ -2,8 +2,8 @@
 
 namespace ANSR\Propel\Entity\Map;
 
-use ANSR\Propel\Entity\Author;
-use ANSR\Propel\Entity\AuthorQuery;
+use ANSR\Propel\Entity\Measure;
+use ANSR\Propel\Entity\MeasureQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'author' table.
+ * This class defines the structure of the 'measures' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class AuthorTableMap extends TableMap
+class MeasureTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,32 +34,32 @@ class AuthorTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = 'ANSR.Propel.Entity.Map.AuthorTableMap';
+    const CLASS_NAME = 'ANSR.Propel.Entity.Map.MeasureTableMap';
 
     /**
      * The default database name for this class
      */
-    const DATABASE_NAME = 'bookstore';
+    const DATABASE_NAME = 'supermarkets_chain';
 
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'author';
+    const TABLE_NAME = 'measures';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\ANSR\\Propel\\Entity\\Author';
+    const OM_CLASS = '\\ANSR\\Propel\\Entity\\Measure';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'ANSR.Propel.Entity.Author';
+    const CLASS_DEFAULT = 'ANSR.Propel.Entity.Measure';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 3;
+    const NUM_COLUMNS = 2;
 
     /**
      * The number of lazy-loaded columns
@@ -69,22 +69,17 @@ class AuthorTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 3;
+    const NUM_HYDRATE_COLUMNS = 2;
 
     /**
      * the column name for the id field
      */
-    const COL_ID = 'author.id';
+    const COL_ID = 'measures.id';
 
     /**
-     * the column name for the first_name field
+     * the column name for the name field
      */
-    const COL_FIRST_NAME = 'author.first_name';
-
-    /**
-     * the column name for the last_name field
-     */
-    const COL_LAST_NAME = 'author.last_name';
+    const COL_NAME = 'measures.name';
 
     /**
      * The default string format for model objects of the related table
@@ -98,11 +93,11 @@ class AuthorTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'FirstName', 'LastName', ),
-        self::TYPE_CAMELNAME     => array('id', 'firstName', 'lastName', ),
-        self::TYPE_COLNAME       => array(AuthorTableMap::COL_ID, AuthorTableMap::COL_FIRST_NAME, AuthorTableMap::COL_LAST_NAME, ),
-        self::TYPE_FIELDNAME     => array('id', 'first_name', 'last_name', ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('Id', 'Name', ),
+        self::TYPE_CAMELNAME     => array('id', 'name', ),
+        self::TYPE_COLNAME       => array(MeasureTableMap::COL_ID, MeasureTableMap::COL_NAME, ),
+        self::TYPE_FIELDNAME     => array('id', 'name', ),
+        self::TYPE_NUM           => array(0, 1, )
     );
 
     /**
@@ -112,11 +107,11 @@ class AuthorTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'FirstName' => 1, 'LastName' => 2, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'firstName' => 1, 'lastName' => 2, ),
-        self::TYPE_COLNAME       => array(AuthorTableMap::COL_ID => 0, AuthorTableMap::COL_FIRST_NAME => 1, AuthorTableMap::COL_LAST_NAME => 2, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'first_name' => 1, 'last_name' => 2, ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Name' => 1, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'name' => 1, ),
+        self::TYPE_COLNAME       => array(MeasureTableMap::COL_ID => 0, MeasureTableMap::COL_NAME => 1, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'name' => 1, ),
+        self::TYPE_NUM           => array(0, 1, )
     );
 
     /**
@@ -129,16 +124,15 @@ class AuthorTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('author');
-        $this->setPhpName('Author');
+        $this->setName('measures');
+        $this->setPhpName('Measure');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\ANSR\\Propel\\Entity\\Author');
+        $this->setClassName('\\ANSR\\Propel\\Entity\\Measure');
         $this->setPackage('ANSR.Propel.Entity');
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('first_name', 'FirstName', 'VARCHAR', true, 128, null);
-        $this->addColumn('last_name', 'LastName', 'VARCHAR', true, 128, null);
+        $this->addColumn('name', 'Name', 'VARCHAR', true, 128, null);
     } // initialize()
 
     /**
@@ -146,13 +140,13 @@ class AuthorTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Book', '\\ANSR\\Propel\\Entity\\Book', RelationMap::ONE_TO_MANY, array (
+        $this->addRelation('Product', '\\ANSR\\Propel\\Entity\\Product', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
-    0 => ':author_id',
+    0 => ':measure_id',
     1 => ':id',
   ),
-), null, null, 'Books', false);
+), null, null, 'Products', false);
     } // buildRelations()
 
     /**
@@ -212,7 +206,7 @@ class AuthorTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? AuthorTableMap::CLASS_DEFAULT : AuthorTableMap::OM_CLASS;
+        return $withPrefix ? MeasureTableMap::CLASS_DEFAULT : MeasureTableMap::OM_CLASS;
     }
 
     /**
@@ -226,22 +220,22 @@ class AuthorTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (Author object, last column rank)
+     * @return array           (Measure object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = AuthorTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = AuthorTableMap::getInstanceFromPool($key))) {
+        $key = MeasureTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = MeasureTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + AuthorTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + MeasureTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = AuthorTableMap::OM_CLASS;
-            /** @var Author $obj */
+            $cls = MeasureTableMap::OM_CLASS;
+            /** @var Measure $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            AuthorTableMap::addInstanceToPool($obj, $key);
+            MeasureTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -264,18 +258,18 @@ class AuthorTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = AuthorTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = AuthorTableMap::getInstanceFromPool($key))) {
+            $key = MeasureTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = MeasureTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var Author $obj */
+                /** @var Measure $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                AuthorTableMap::addInstanceToPool($obj, $key);
+                MeasureTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -296,13 +290,11 @@ class AuthorTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(AuthorTableMap::COL_ID);
-            $criteria->addSelectColumn(AuthorTableMap::COL_FIRST_NAME);
-            $criteria->addSelectColumn(AuthorTableMap::COL_LAST_NAME);
+            $criteria->addSelectColumn(MeasureTableMap::COL_ID);
+            $criteria->addSelectColumn(MeasureTableMap::COL_NAME);
         } else {
             $criteria->addSelectColumn($alias . '.id');
-            $criteria->addSelectColumn($alias . '.first_name');
-            $criteria->addSelectColumn($alias . '.last_name');
+            $criteria->addSelectColumn($alias . '.name');
         }
     }
 
@@ -315,7 +307,7 @@ class AuthorTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(AuthorTableMap::DATABASE_NAME)->getTable(AuthorTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(MeasureTableMap::DATABASE_NAME)->getTable(MeasureTableMap::TABLE_NAME);
     }
 
     /**
@@ -323,16 +315,16 @@ class AuthorTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(AuthorTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(AuthorTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new AuthorTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(MeasureTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(MeasureTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new MeasureTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a Author or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Measure or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or Author object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Measure object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -343,27 +335,27 @@ class AuthorTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(AuthorTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(MeasureTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \ANSR\Propel\Entity\Author) { // it's a model object
+        } elseif ($values instanceof \ANSR\Propel\Entity\Measure) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(AuthorTableMap::DATABASE_NAME);
-            $criteria->add(AuthorTableMap::COL_ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(MeasureTableMap::DATABASE_NAME);
+            $criteria->add(MeasureTableMap::COL_ID, (array) $values, Criteria::IN);
         }
 
-        $query = AuthorQuery::create()->mergeWith($criteria);
+        $query = MeasureQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            AuthorTableMap::clearInstancePool();
+            MeasureTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                AuthorTableMap::removeInstanceFromPool($singleval);
+                MeasureTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -371,20 +363,20 @@ class AuthorTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the author table.
+     * Deletes all rows from the measures table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return AuthorQuery::create()->doDeleteAll($con);
+        return MeasureQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a Author or Criteria object.
+     * Performs an INSERT on the database, given a Measure or Criteria object.
      *
-     * @param mixed               $criteria Criteria or Author object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Measure object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -393,22 +385,22 @@ class AuthorTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(AuthorTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(MeasureTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from Author object
+            $criteria = $criteria->buildCriteria(); // build Criteria from Measure object
         }
 
-        if ($criteria->containsKey(AuthorTableMap::COL_ID) && $criteria->keyContainsValue(AuthorTableMap::COL_ID) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.AuthorTableMap::COL_ID.')');
+        if ($criteria->containsKey(MeasureTableMap::COL_ID) && $criteria->keyContainsValue(MeasureTableMap::COL_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.MeasureTableMap::COL_ID.')');
         }
 
 
         // Set the correct dbName
-        $query = AuthorQuery::create()->mergeWith($criteria);
+        $query = MeasureQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -417,7 +409,7 @@ class AuthorTableMap extends TableMap
         });
     }
 
-} // AuthorTableMap
+} // MeasureTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-AuthorTableMap::buildTableMap();
+MeasureTableMap::buildTableMap();

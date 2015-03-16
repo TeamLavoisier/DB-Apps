@@ -2,8 +2,8 @@
 
 namespace ANSR\Propel\Entity\Map;
 
-use ANSR\Propel\Entity\Book;
-use ANSR\Propel\Entity\BookQuery;
+use ANSR\Propel\Entity\Town;
+use ANSR\Propel\Entity\TownQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'book' table.
+ * This class defines the structure of the 'towns' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class BookTableMap extends TableMap
+class TownTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,32 +34,32 @@ class BookTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = 'ANSR.Propel.Entity.Map.BookTableMap';
+    const CLASS_NAME = 'ANSR.Propel.Entity.Map.TownTableMap';
 
     /**
      * The default database name for this class
      */
-    const DATABASE_NAME = 'bookstore';
+    const DATABASE_NAME = 'supermarkets_chain';
 
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'book';
+    const TABLE_NAME = 'towns';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\ANSR\\Propel\\Entity\\Book';
+    const OM_CLASS = '\\ANSR\\Propel\\Entity\\Town';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'ANSR.Propel.Entity.Book';
+    const CLASS_DEFAULT = 'ANSR.Propel.Entity.Town';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 2;
 
     /**
      * The number of lazy-loaded columns
@@ -69,32 +69,17 @@ class BookTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 2;
 
     /**
      * the column name for the id field
      */
-    const COL_ID = 'book.id';
+    const COL_ID = 'towns.id';
 
     /**
-     * the column name for the title field
+     * the column name for the name field
      */
-    const COL_TITLE = 'book.title';
-
-    /**
-     * the column name for the isbn field
-     */
-    const COL_ISBN = 'book.isbn';
-
-    /**
-     * the column name for the publisher_id field
-     */
-    const COL_PUBLISHER_ID = 'book.publisher_id';
-
-    /**
-     * the column name for the author_id field
-     */
-    const COL_AUTHOR_ID = 'book.author_id';
+    const COL_NAME = 'towns.name';
 
     /**
      * The default string format for model objects of the related table
@@ -108,11 +93,11 @@ class BookTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Title', 'ISBN', 'PublisherId', 'AuthorId', ),
-        self::TYPE_CAMELNAME     => array('id', 'title', 'iSBN', 'publisherId', 'authorId', ),
-        self::TYPE_COLNAME       => array(BookTableMap::COL_ID, BookTableMap::COL_TITLE, BookTableMap::COL_ISBN, BookTableMap::COL_PUBLISHER_ID, BookTableMap::COL_AUTHOR_ID, ),
-        self::TYPE_FIELDNAME     => array('id', 'title', 'isbn', 'publisher_id', 'author_id', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Id', 'Name', ),
+        self::TYPE_CAMELNAME     => array('id', 'name', ),
+        self::TYPE_COLNAME       => array(TownTableMap::COL_ID, TownTableMap::COL_NAME, ),
+        self::TYPE_FIELDNAME     => array('id', 'name', ),
+        self::TYPE_NUM           => array(0, 1, )
     );
 
     /**
@@ -122,11 +107,11 @@ class BookTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Title' => 1, 'ISBN' => 2, 'PublisherId' => 3, 'AuthorId' => 4, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'title' => 1, 'iSBN' => 2, 'publisherId' => 3, 'authorId' => 4, ),
-        self::TYPE_COLNAME       => array(BookTableMap::COL_ID => 0, BookTableMap::COL_TITLE => 1, BookTableMap::COL_ISBN => 2, BookTableMap::COL_PUBLISHER_ID => 3, BookTableMap::COL_AUTHOR_ID => 4, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'title' => 1, 'isbn' => 2, 'publisher_id' => 3, 'author_id' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Name' => 1, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'name' => 1, ),
+        self::TYPE_COLNAME       => array(TownTableMap::COL_ID => 0, TownTableMap::COL_NAME => 1, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'name' => 1, ),
+        self::TYPE_NUM           => array(0, 1, )
     );
 
     /**
@@ -139,18 +124,15 @@ class BookTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('book');
-        $this->setPhpName('Book');
+        $this->setName('towns');
+        $this->setPhpName('Town');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\ANSR\\Propel\\Entity\\Book');
+        $this->setClassName('\\ANSR\\Propel\\Entity\\Town');
         $this->setPackage('ANSR.Propel.Entity');
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('title', 'Title', 'VARCHAR', true, 255, null);
-        $this->addColumn('isbn', 'ISBN', 'VARCHAR', true, 24, null);
-        $this->addForeignKey('publisher_id', 'PublisherId', 'INTEGER', 'publisher', 'id', true, null, null);
-        $this->addForeignKey('author_id', 'AuthorId', 'INTEGER', 'author', 'id', true, null, null);
+        $this->addColumn('name', 'Name', 'VARCHAR', true, 128, null);
     } // initialize()
 
     /**
@@ -158,20 +140,13 @@ class BookTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Publisher', '\\ANSR\\Propel\\Entity\\Publisher', RelationMap::MANY_TO_ONE, array (
+        $this->addRelation('Supermarket', '\\ANSR\\Propel\\Entity\\Supermarket', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
-    0 => ':publisher_id',
+    0 => ':town_id',
     1 => ':id',
   ),
-), null, null, null, false);
-        $this->addRelation('Author', '\\ANSR\\Propel\\Entity\\Author', RelationMap::MANY_TO_ONE, array (
-  0 =>
-  array (
-    0 => ':author_id',
-    1 => ':id',
-  ),
-), null, null, null, false);
+), null, null, 'Supermarkets', false);
     } // buildRelations()
 
     /**
@@ -231,7 +206,7 @@ class BookTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? BookTableMap::CLASS_DEFAULT : BookTableMap::OM_CLASS;
+        return $withPrefix ? TownTableMap::CLASS_DEFAULT : TownTableMap::OM_CLASS;
     }
 
     /**
@@ -245,22 +220,22 @@ class BookTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (Book object, last column rank)
+     * @return array           (Town object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = BookTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = BookTableMap::getInstanceFromPool($key))) {
+        $key = TownTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = TownTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + BookTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + TownTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = BookTableMap::OM_CLASS;
-            /** @var Book $obj */
+            $cls = TownTableMap::OM_CLASS;
+            /** @var Town $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            BookTableMap::addInstanceToPool($obj, $key);
+            TownTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -283,18 +258,18 @@ class BookTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = BookTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = BookTableMap::getInstanceFromPool($key))) {
+            $key = TownTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = TownTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var Book $obj */
+                /** @var Town $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                BookTableMap::addInstanceToPool($obj, $key);
+                TownTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -315,17 +290,11 @@ class BookTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(BookTableMap::COL_ID);
-            $criteria->addSelectColumn(BookTableMap::COL_TITLE);
-            $criteria->addSelectColumn(BookTableMap::COL_ISBN);
-            $criteria->addSelectColumn(BookTableMap::COL_PUBLISHER_ID);
-            $criteria->addSelectColumn(BookTableMap::COL_AUTHOR_ID);
+            $criteria->addSelectColumn(TownTableMap::COL_ID);
+            $criteria->addSelectColumn(TownTableMap::COL_NAME);
         } else {
             $criteria->addSelectColumn($alias . '.id');
-            $criteria->addSelectColumn($alias . '.title');
-            $criteria->addSelectColumn($alias . '.isbn');
-            $criteria->addSelectColumn($alias . '.publisher_id');
-            $criteria->addSelectColumn($alias . '.author_id');
+            $criteria->addSelectColumn($alias . '.name');
         }
     }
 
@@ -338,7 +307,7 @@ class BookTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(BookTableMap::DATABASE_NAME)->getTable(BookTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(TownTableMap::DATABASE_NAME)->getTable(TownTableMap::TABLE_NAME);
     }
 
     /**
@@ -346,16 +315,16 @@ class BookTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(BookTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(BookTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new BookTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(TownTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(TownTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new TownTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a Book or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Town or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or Book object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Town object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -366,27 +335,27 @@ class BookTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(BookTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(TownTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \ANSR\Propel\Entity\Book) { // it's a model object
+        } elseif ($values instanceof \ANSR\Propel\Entity\Town) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(BookTableMap::DATABASE_NAME);
-            $criteria->add(BookTableMap::COL_ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(TownTableMap::DATABASE_NAME);
+            $criteria->add(TownTableMap::COL_ID, (array) $values, Criteria::IN);
         }
 
-        $query = BookQuery::create()->mergeWith($criteria);
+        $query = TownQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            BookTableMap::clearInstancePool();
+            TownTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                BookTableMap::removeInstanceFromPool($singleval);
+                TownTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -394,20 +363,20 @@ class BookTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the book table.
+     * Deletes all rows from the towns table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return BookQuery::create()->doDeleteAll($con);
+        return TownQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a Book or Criteria object.
+     * Performs an INSERT on the database, given a Town or Criteria object.
      *
-     * @param mixed               $criteria Criteria or Book object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Town object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -416,22 +385,22 @@ class BookTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(BookTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(TownTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from Book object
+            $criteria = $criteria->buildCriteria(); // build Criteria from Town object
         }
 
-        if ($criteria->containsKey(BookTableMap::COL_ID) && $criteria->keyContainsValue(BookTableMap::COL_ID) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.BookTableMap::COL_ID.')');
+        if ($criteria->containsKey(TownTableMap::COL_ID) && $criteria->keyContainsValue(TownTableMap::COL_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.TownTableMap::COL_ID.')');
         }
 
 
         // Set the correct dbName
-        $query = BookQuery::create()->mergeWith($criteria);
+        $query = TownQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -440,7 +409,7 @@ class BookTableMap extends TableMap
         });
     }
 
-} // BookTableMap
+} // TownTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-BookTableMap::buildTableMap();
+TownTableMap::buildTableMap();

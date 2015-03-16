@@ -2,10 +2,10 @@
 
 namespace ANSR\Propel\Entity;
 
-use ANSR\Propel\Entity\Base\Author as BaseAuthor;
+use ANSR\Propel\Entity\Base\Supermarket as BaseSupermarket;
 
 /**
- * Skeleton subclass for representing a row from the 'author' table.
+ * Skeleton subclass for representing a row from the 'supermarkets' table.
  *
  *
  *
@@ -14,7 +14,7 @@ use ANSR\Propel\Entity\Base\Author as BaseAuthor;
  * long as it does not already exist in the output directory.
  *
  */
-class Author extends BaseAuthor
+class Supermarket extends BaseSupermarket
 {
 
 }
