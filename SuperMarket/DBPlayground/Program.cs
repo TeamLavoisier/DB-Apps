@@ -28,21 +28,32 @@
 
             string[] responseJSON = response.ToString().Split(new char[] { ']' }, StringSplitOptions.RemoveEmptyEntries);
            
+            var reportMongoDB =  GenerateReportForMongoDB(responseJSON);
+
+            Console.WriteLine(reportMongoDB.ToString());
+        }
+
+        private static StringBuilder GenerateReportForMongoDB(string[] responseJSON)
+        {
+            StringBuilder sb = new StringBuilder();
+
             var totalSales = ParseSales(responseJSON);
             var totalProducts = ParseProducts(responseJSON);
             var totalVendors = parseVendors(responseJSON);
             foreach (var product in totalProducts)
             {
-                Console.WriteLine("product-id: " + product.Id + "\n" + "product-name: " +product.Name);
-                
+                sb.AppendLine("{");
+                sb.AppendLine("\"product-id\" : " + product.Id + ",");
+                sb.AppendLine("\"product-name\" : " + product.Name + ",");
+
                 foreach (var vendor in totalVendors)
                 {
                     if (vendor.Id == product.VendorId)
                     {
-                        Console.WriteLine("vendor-name: " + vendor.Name);
+                        sb.AppendLine("\"vendor-name\" : " + vendor.Name + ",");
                     }
                 }
-                
+
                 int salesCount = 0;
                 decimal income = 0;
                 foreach (var sale in totalSales)
@@ -53,9 +64,13 @@
                         income = sale.PricePerUnit - sale.Cost;
                     }
                 }
-                Console.WriteLine("total-quantity-sold :" + salesCount);
-                Console.WriteLine("total-income: " + income * salesCount);
+                sb.AppendLine("\"total-quantity-sold\"" + " : " + salesCount + ",");
+                string totalIncome = String.Format("\"total-income\" : {0:f2}, ", income*salesCount);
+                sb.AppendLine(totalIncome);
+                sb.AppendLine("}");
             }
+
+            return sb;
         }
 
         private static List<Vendor> parseVendors(string[] response)
