@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Data.SqlTypes;
-
-namespace DBPlayground
+﻿namespace DBPlayground
 {
     using System;
     using System.IO;
@@ -9,7 +6,11 @@ namespace DBPlayground
     using System.Text;
     using SuperMarket.MySQL;
 
+    using System.Collections.Generic;
+    using System.Data.SqlTypes;
+
     using SuperMarket.Model;
+
     internal class Program
     {
         private static void Main(string[] args)
@@ -18,35 +19,110 @@ namespace DBPlayground
             var dbMySQL = new DBConnect();
             var productsCount = dbMySQL.Count();
             // print number of products 
-            Console.WriteLine(productsCount);
+            Console.WriteLine("total products: " + productsCount);
 
             // Create a request using a URL that can receive a post. 
             var response = GetResponse();
         
             // Create flat JSON from response
 
-            string[] resp = response.ToString().Split(new char[] { ']' }, StringSplitOptions.RemoveEmptyEntries);
-
-            var sales = resp[3].Substring(10).Split(new char[] { '}' }, StringSplitOptions.RemoveEmptyEntries);
-
-            char[] delimiter = {','};
-            List<Sale> totalSales = new List<Sale>();
-            
-            foreach (var sls in sales)
+            string[] responseJSON = response.ToString().Split(new char[] { ']' }, StringSplitOptions.RemoveEmptyEntries);
+           
+            var totalSales = ParseSales(responseJSON);
+            var totalProducts = ParseProducts(responseJSON);
+            var totalVendors = parseVendors(responseJSON);
+            foreach (var product in totalProducts)
             {
-                var s = sls.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
+                Console.WriteLine("product-id: " + product.Id + "\n" + "product-name: " +product.Name);
+                
+                foreach (var vendor in totalVendors)
+                {
+                    if (vendor.Id == product.VendorId)
+                    {
+                        Console.WriteLine("vendor-name: " + vendor.Name);
+                    }
+                }
+                
+                int salesCount = 0;
+                decimal income = 0;
+                foreach (var sale in totalSales)
+                {
+                    if (sale.ProductId == product.Id)
+                    {
+                        salesCount++;
+                        income = sale.PricePerUnit - sale.Cost;
+                    }
+                }
+                Console.WriteLine("total-quantity-sold :" + salesCount);
+                Console.WriteLine("total-income: " + income * salesCount);
+            }
+        }
+
+        private static List<Vendor> parseVendors(string[] response)
+        {
+            var parseVendors = new List<Vendor>();
+            var vendors = response[6].Substring(11).Split(new char[] { '}' }, StringSplitOptions.RemoveEmptyEntries);
+            char[] separator = { ',' };
+
+            foreach (var vendor in vendors)
+            {
+                var v = vendor.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                var id = int.Parse(v[0].Substring(v[0].IndexOf(':') + 1));
+                var name = v[1].Substring(v[1].IndexOf(':') + 1);
+
+                parseVendors.Add(new Vendor(id, name));
+            }
+
+            return parseVendors;
+        }
+
+        private static List<Product> ParseProducts(string[] response)
+        {
+            var parseProducts = new List<Product>();
+            var products = response[2].Substring(11).Split(new char[] { '}' }, StringSplitOptions.RemoveEmptyEntries);
+            char[] separator = { ',' };
+
+            foreach (var product in products)
+            {
+                var p = product.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+
+                var id = int.Parse(p[0].Substring(p[0].IndexOf(':') + 1));
+                var name = p[1].Substring(p[1].IndexOf(':') + 1);
+                var tax = decimal.Parse(p[2].Substring(p[2].IndexOf(':') + 1));
+                var vendorId = int.Parse(p[3].Substring(p[3].IndexOf(':') + 1));
+                var measureId = int.Parse(p[4].Substring(p[4].IndexOf(':') + 1));
+
+                parseProducts.Add(new Product(id, name, tax, vendorId, measureId));
+            }
+
+            return parseProducts;
+        }
+
+
+        private static List<Sale> ParseSales(string[] response)
+        {
+            List<Sale> parseSales = new List<Sale>();
+            var sales = response[3].Substring(10).Split(new char[] {'}'}, StringSplitOptions.RemoveEmptyEntries);
+
+            char[] separator = {','};
+
+            foreach (var sale in sales)
+            {
+                var s = sale.Split(separator, StringSplitOptions.RemoveEmptyEntries);
 
                 var id = int.Parse(s[0].Substring(s[0].IndexOf(':') + 1));
-                var soldOn = new DateTime(int.Parse(s[1].Substring(s[1].IndexOf(':') + 2, 4)), int.Parse(s[1].Substring(s[1].IndexOf(':') + 7, 2)), int.Parse(s[1].Substring(s[1].IndexOf(':') + 10, 2) ));
+                var soldOn = new DateTime(int.Parse(s[1].Substring(s[1].IndexOf(':') + 2, 4)),
+                    int.Parse(s[1].Substring(s[1].IndexOf(':') + 7, 2)), int.Parse(s[1].Substring(s[1].IndexOf(':') + 10, 2)));
                 var quantity = int.Parse(s[2].Substring(s[2].IndexOf(':') + 1));
                 var pricePerUnit = decimal.Parse(s[3].Substring(s[3].IndexOf(':') + 1));
                 var cost = decimal.Parse(s[4].Substring(s[4].IndexOf(':') + 1));
                 var supermarketId = int.Parse(s[5].Substring(s[5].IndexOf(':') + 1));
                 var productId = int.Parse(s[6].Substring(s[6].IndexOf(':') + 1));
-            
-                totalSales.Add(new Sale(id, soldOn, quantity, pricePerUnit, cost, supermarketId, productId));
+
+                parseSales.Add(new Sale(id, soldOn, quantity, pricePerUnit, cost, supermarketId, productId));
             }
 
+            return parseSales;
         }
 
         private static StringBuilder GetResponse()

@@ -11,5 +11,14 @@
         public int VendorId { get; set; }
         
         public int MeasureId { get; set; }
+
+        public Product(int id, string name, decimal tax, int vendorId, int measureId)
+        {
+            this.Id = id;
+            this.Name = name;
+            this.Tax = tax;
+            this.VendorId = vendorId;
+            this.MeasureId = measureId;
+        }
     }
 }
