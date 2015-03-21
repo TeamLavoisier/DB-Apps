@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="39053837090442db866eabe25c352719" Name="Diagram1">
+        <EntityTypeShape EntityType="SupermarketModel.expence" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SupermarketModel.measure" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SupermarketModel.product" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SupermarketModel.sale" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SupermarketModel.supermarket" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SupermarketModel.town" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="SupermarketModel.vendor" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <AssociationConnector Association="SupermarketModel.expences_fk_31a63b" ManuallyRouted="false" />
+        <AssociationConnector Association="SupermarketModel.products_fk_418dc6" ManuallyRouted="false" />
+        <AssociationConnector Association="SupermarketModel.products_fk_31a63b" ManuallyRouted="false" />
+        <AssociationConnector Association="SupermarketModel.sales_fk_d90c10" ManuallyRouted="false" />
+        <AssociationConnector Association="SupermarketModel.sales_fk_14cb72" ManuallyRouted="false" />
+        <AssociationConnector Association="SupermarketModel.supermarkets_fk_403fae" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

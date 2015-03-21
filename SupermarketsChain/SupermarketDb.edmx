@@ -1,0 +1,451 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SupermarketModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="expences">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_on" Type="datetime" Nullable="false" />
+          <Property Name="vendor_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="measures">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="products">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="tax" Type="int" Nullable="false" />
+          <Property Name="vendor_id" Type="int" Nullable="false" />
+          <Property Name="measure_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sales">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sold_on" Type="datetime" Nullable="false" />
+          <Property Name="quantity" Type="int" Nullable="false" />
+          <Property Name="price_per_unit" Type="int" Nullable="false" />
+          <Property Name="cost" Type="int" Nullable="false" />
+          <Property Name="supermarket_id" Type="int" Nullable="false" />
+          <Property Name="product_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="supermarkets">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="town_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="towns">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vendors">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <Association Name="expences_fk_31a63b">
+          <End Role="vendors" Type="Self.vendors" Multiplicity="1" />
+          <End Role="expences" Type="Self.expences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vendors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="expences">
+              <PropertyRef Name="vendor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="products_fk_31a63b">
+          <End Role="vendors" Type="Self.vendors" Multiplicity="1" />
+          <End Role="products" Type="Self.products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vendors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="products">
+              <PropertyRef Name="vendor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="products_fk_418dc6">
+          <End Role="measures" Type="Self.measures" Multiplicity="1" />
+          <End Role="products" Type="Self.products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="measures">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="products">
+              <PropertyRef Name="measure_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="sales_fk_14cb72">
+          <End Role="supermarkets" Type="Self.supermarkets" Multiplicity="1" />
+          <End Role="sales" Type="Self.sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="supermarkets">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sales">
+              <PropertyRef Name="supermarket_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="sales_fk_d90c10">
+          <End Role="products" Type="Self.products" Multiplicity="1" />
+          <End Role="sales" Type="Self.sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sales">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="supermarkets_fk_403fae">
+          <End Role="towns" Type="Self.towns" Multiplicity="1" />
+          <End Role="supermarkets" Type="Self.supermarkets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="towns">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="supermarkets">
+              <PropertyRef Name="town_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SupermarketModelStoreContainer">
+          <EntitySet Name="expences" EntityType="Self.expences" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="measures" EntityType="Self.measures" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sales" EntityType="Self.sales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="supermarkets" EntityType="Self.supermarkets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="towns" EntityType="Self.towns" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vendors" EntityType="Self.vendors" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="expences_fk_31a63b" Association="Self.expences_fk_31a63b">
+            <End Role="vendors" EntitySet="vendors" />
+            <End Role="expences" EntitySet="expences" />
+          </AssociationSet>
+          <AssociationSet Name="products_fk_31a63b" Association="Self.products_fk_31a63b">
+            <End Role="vendors" EntitySet="vendors" />
+            <End Role="products" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="products_fk_418dc6" Association="Self.products_fk_418dc6">
+            <End Role="measures" EntitySet="measures" />
+            <End Role="products" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="sales_fk_14cb72" Association="Self.sales_fk_14cb72">
+            <End Role="supermarkets" EntitySet="supermarkets" />
+            <End Role="sales" EntitySet="sales" />
+          </AssociationSet>
+          <AssociationSet Name="sales_fk_d90c10" Association="Self.sales_fk_d90c10">
+            <End Role="products" EntitySet="products" />
+            <End Role="sales" EntitySet="sales" />
+          </AssociationSet>
+          <AssociationSet Name="supermarkets_fk_403fae" Association="Self.supermarkets_fk_403fae">
+            <End Role="towns" EntitySet="towns" />
+            <End Role="supermarkets" EntitySet="supermarkets" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SupermarketModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="expence">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_on" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="vendor_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="vendor" Relationship="Self.expences_fk_31a63b" FromRole="expences" ToRole="vendors" />
+        </EntityType>
+        <EntityType Name="measure">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="products" Relationship="Self.products_fk_418dc6" FromRole="measures" ToRole="products" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tax" Type="Int32" Nullable="false" />
+          <Property Name="vendor_id" Type="Int32" Nullable="false" />
+          <Property Name="measure_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="measure" Relationship="Self.products_fk_418dc6" FromRole="products" ToRole="measures" />
+          <NavigationProperty Name="vendor" Relationship="Self.products_fk_31a63b" FromRole="products" ToRole="vendors" />
+          <NavigationProperty Name="sales" Relationship="Self.sales_fk_d90c10" FromRole="products" ToRole="sales" />
+        </EntityType>
+        <EntityType Name="sale">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sold_on" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="quantity" Type="Int32" Nullable="false" />
+          <Property Name="price_per_unit" Type="Int32" Nullable="false" />
+          <Property Name="cost" Type="Int32" Nullable="false" />
+          <Property Name="supermarket_id" Type="Int32" Nullable="false" />
+          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="product" Relationship="Self.sales_fk_d90c10" FromRole="sales" ToRole="products" />
+          <NavigationProperty Name="supermarket" Relationship="Self.sales_fk_14cb72" FromRole="sales" ToRole="supermarkets" />
+        </EntityType>
+        <EntityType Name="supermarket">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="town_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="sales" Relationship="Self.sales_fk_14cb72" FromRole="supermarkets" ToRole="sales" />
+          <NavigationProperty Name="town" Relationship="Self.supermarkets_fk_403fae" FromRole="supermarkets" ToRole="towns" />
+        </EntityType>
+        <EntityType Name="town">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="supermarkets" Relationship="Self.supermarkets_fk_403fae" FromRole="towns" ToRole="supermarkets" />
+        </EntityType>
+        <EntityType Name="vendor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="expences" Relationship="Self.expences_fk_31a63b" FromRole="vendors" ToRole="expences" />
+          <NavigationProperty Name="products" Relationship="Self.products_fk_31a63b" FromRole="vendors" ToRole="products" />
+        </EntityType>
+        <Association Name="expences_fk_31a63b">
+          <End Role="vendors" Type="Self.vendor" Multiplicity="1" />
+          <End Role="expences" Type="Self.expence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vendors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="expences">
+              <PropertyRef Name="vendor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="products_fk_418dc6">
+          <End Role="measures" Type="Self.measure" Multiplicity="1" />
+          <End Role="products" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="measures">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="products">
+              <PropertyRef Name="measure_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="products_fk_31a63b">
+          <End Role="vendors" Type="Self.vendor" Multiplicity="1" />
+          <End Role="products" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vendors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="products">
+              <PropertyRef Name="vendor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="sales_fk_d90c10">
+          <End Role="products" Type="Self.product" Multiplicity="1" />
+          <End Role="sales" Type="Self.sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sales">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="sales_fk_14cb72">
+          <End Role="supermarkets" Type="Self.supermarket" Multiplicity="1" />
+          <End Role="sales" Type="Self.sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="supermarkets">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sales">
+              <PropertyRef Name="supermarket_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="supermarkets_fk_403fae">
+          <End Role="towns" Type="Self.town" Multiplicity="1" />
+          <End Role="supermarkets" Type="Self.supermarket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="towns">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="supermarkets">
+              <PropertyRef Name="town_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SupermarketDbContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="expences" EntityType="Self.expence" />
+          <EntitySet Name="measures" EntityType="Self.measure" />
+          <EntitySet Name="products" EntityType="Self.product" />
+          <EntitySet Name="sales" EntityType="Self.sale" />
+          <EntitySet Name="supermarkets" EntityType="Self.supermarket" />
+          <EntitySet Name="towns" EntityType="Self.town" />
+          <EntitySet Name="vendors" EntityType="Self.vendor" />
+          <AssociationSet Name="expences_fk_31a63b" Association="Self.expences_fk_31a63b">
+            <End Role="vendors" EntitySet="vendors" />
+            <End Role="expences" EntitySet="expences" />
+          </AssociationSet>
+          <AssociationSet Name="products_fk_418dc6" Association="Self.products_fk_418dc6">
+            <End Role="measures" EntitySet="measures" />
+            <End Role="products" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="products_fk_31a63b" Association="Self.products_fk_31a63b">
+            <End Role="vendors" EntitySet="vendors" />
+            <End Role="products" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="sales_fk_d90c10" Association="Self.sales_fk_d90c10">
+            <End Role="products" EntitySet="products" />
+            <End Role="sales" EntitySet="sales" />
+          </AssociationSet>
+          <AssociationSet Name="sales_fk_14cb72" Association="Self.sales_fk_14cb72">
+            <End Role="supermarkets" EntitySet="supermarkets" />
+            <End Role="sales" EntitySet="sales" />
+          </AssociationSet>
+          <AssociationSet Name="supermarkets_fk_403fae" Association="Self.supermarkets_fk_403fae">
+            <End Role="towns" EntitySet="towns" />
+            <End Role="supermarkets" EntitySet="supermarkets" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SupermarketModelStoreContainer" CdmEntityContainer="SupermarketDbContext">
+          <EntitySetMapping Name="expences">
+            <EntityTypeMapping TypeName="SupermarketModel.expence">
+              <MappingFragment StoreEntitySet="expences">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="created_on" ColumnName="created_on" />
+                <ScalarProperty Name="vendor_id" ColumnName="vendor_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="measures">
+            <EntityTypeMapping TypeName="SupermarketModel.measure">
+              <MappingFragment StoreEntitySet="measures">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="SupermarketModel.product">
+              <MappingFragment StoreEntitySet="products">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="tax" ColumnName="tax" />
+                <ScalarProperty Name="vendor_id" ColumnName="vendor_id" />
+                <ScalarProperty Name="measure_id" ColumnName="measure_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sales">
+            <EntityTypeMapping TypeName="SupermarketModel.sale">
+              <MappingFragment StoreEntitySet="sales">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="sold_on" ColumnName="sold_on" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="price_per_unit" ColumnName="price_per_unit" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="supermarket_id" ColumnName="supermarket_id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="supermarkets">
+            <EntityTypeMapping TypeName="SupermarketModel.supermarket">
+              <MappingFragment StoreEntitySet="supermarkets">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="town_id" ColumnName="town_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="towns">
+            <EntityTypeMapping TypeName="SupermarketModel.town">
+              <MappingFragment StoreEntitySet="towns">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vendors">
+            <EntityTypeMapping TypeName="SupermarketModel.vendor">
+              <MappingFragment StoreEntitySet="vendors">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
