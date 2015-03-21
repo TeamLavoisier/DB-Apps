@@ -67,4 +67,4 @@ $__router
 
 \ANSR\Library\Registry\Registry::set('WEB_SERVICE', true);
 
-\ANSR\Library\DependencyContainer\AppStarter::createApp('MySQLi_Procedural', 'DefaultRouter', 'development');
+\ANSR\Library\DependencyContainer\AppStarter::createApp('NoAdapter', 'DefaultRouter', 'development');

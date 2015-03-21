@@ -46,6 +46,45 @@ class ConnectionPool
             $this->getDbInfo()->getDb()
         );
 
+        $mapDir = getcwd() . "/Propel/Entity/Map";
+
+        foreach (scandir($mapDir) as $file) {
+            if (in_array($file, ['.', '..'])) {
+                continue;
+            }
+            $content = file_get_contents($mapDir . '/' . $file);
+
+            preg_match_all("/const DATABASE_NAME = '(.*)'/", $content, $matches);
+            $db = \Propel\Runtime\Propel::getServiceContainer()->getDefaultDatasource();
+            $row = str_replace($matches[1], $db, $matches[0]);
+            $content = str_replace($matches[0], $row, $content);
+
+            $handle = fopen($mapDir . '/' . $file, 'w');
+            fwrite($handle, $content);
+        }
+
+        $baseDir = getcwd() . "/Propel/Entity/Base";
+
+        foreach (scandir($baseDir) as $file) {
+            if (in_array($file, ['.', '..'])) {
+                continue;
+            }
+
+            if (strpos(strrev($file), strrev('Query.php')) !== 0) {
+                continue;
+            }
+
+            $content = file_get_contents($baseDir . '/' . $file);
+
+            preg_match_all("/dbName = '(.*)'/", $content, $matches);
+            $db = \Propel\Runtime\Propel::getServiceContainer()->getDefaultDatasource();
+            $against = explode(',', $matches[1][0])[0];
+            $content = str_replace($against, $db . "'", $content);
+            $handle = fopen($baseDir . '/' . $file, 'w');
+            fwrite($handle, $content);
+        }
+
+
         return $this;
     }
 }

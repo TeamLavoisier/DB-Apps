@@ -6,7 +6,7 @@ namespace ANSR\Services\DatabaseCreator\Config;
 class ConfigFactory
 {
     const TYPE_MYSQL = 'mysql';
-    const TYPE_MSSQL = 'mssql';
+    const TYPE_MSSQL = 'sqlsrv';
     const TYPE_ORACLE = 'oracle';
 
     /**

@@ -94,7 +94,7 @@ abstract class SaleQuery extends ModelCriteria
      * @param     string $modelName The phpName of a model, e.g. 'Book'
      * @param     string $modelAlias The alias for the model in this query, e.g. 'b'
      */
-    public function __construct($dbName = 'supermarkets_chain', $modelName = '\\ANSR\\Propel\\Entity\\Sale', $modelAlias = null)
+    public function __construct($dbName = 'supermarkets_chainmssql', $modelName = '\\ANSR\\Propel\\Entity\\Sale', $modelAlias = null)
     {
         parent::__construct($dbName, $modelName, $modelAlias);
     }

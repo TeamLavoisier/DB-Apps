@@ -7,10 +7,9 @@ namespace ANSR\Config;
  */
 final class MSSQLConfig
 {
-
     const HOST = 'localhost';
-    const USER = 'root';
+    const USER = '';
     const PASS = '';
-    const DATABASE = 'test';
+    const DATABASE = 'supermarkets_chainmssql';
 
 }

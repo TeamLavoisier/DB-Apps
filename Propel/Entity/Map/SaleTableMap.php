@@ -39,7 +39,7 @@ class SaleTableMap extends TableMap
     /**
      * The default database name for this class
      */
-    const DATABASE_NAME = 'supermarkets_chain';
+    const DATABASE_NAME = 'supermarkets_chainmssql';
 
     /**
      * The table name for this class
