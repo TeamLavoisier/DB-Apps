@@ -42,7 +42,6 @@ namespace SupermarketsChain.Tasks
             var jsonSerialiser = new JavaScriptSerializer();
             json += jsonSerialiser.Serialize(productsQuery.ToList());
             json += "}";
-            Console.WriteLine(json);
             var ReportEntityObj = JsonConvert.DeserializeObject<ReportEntity>(json);
             Document doc = new Document(iTextSharp.text.PageSize.LETTER, 10, 10, 42, 35);
             PdfWriter write = PdfWriter.GetInstance(doc, new FileStream("TestReport.pdf", FileMode.Create));

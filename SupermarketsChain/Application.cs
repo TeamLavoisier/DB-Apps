@@ -61,6 +61,9 @@ namespace SupermarketsChain
                 case "load-reports":
                     task = new ExcelImport();
                     break;
+                case "mysql-import":
+                    task = new MySQLImport();
+                    break;
                 default:
                     throw new ArgumentException("Invalid input");
             }
