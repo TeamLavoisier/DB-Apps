@@ -11,7 +11,7 @@ namespace SupermarketsChain.Tasks
 {
     class MongoDBReports : ITask
     {
-        public void Run()
+        public void Run(string[] args)
         {
             var db = new SupermarketDbContext();
 

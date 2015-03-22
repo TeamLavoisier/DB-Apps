@@ -14,7 +14,7 @@ namespace SupermarketsChain.Tasks
 {
     class JSONtoXML : ITask
     {
-        public void Run()
+        public void Run(string[] args)
         {
             RestApi.DbExporter("mysql");
 

@@ -43,8 +43,8 @@ namespace SupermarketsChain
         private void ParseInput()
         {
             ITask task;
-
-            switch (this.line)
+            string[] data = this.line.Split();
+            switch (data[0])
             {
                 case "generate-xml-report":
                     task = new JSONtoXML();
@@ -55,11 +55,17 @@ namespace SupermarketsChain
                 case "xml-import":
                     task = new XMLImport();
                     break;
+                case "generate-pdf":
+                    task = new GeneratePDF();
+                    break;
+                case "load-reports":
+                    task = new ExcelImport();
+                    break;
                 default:
                     throw new ArgumentException("Invalid input");
             }
 
-            task.Run();
+            task.Run(data);
         }
 
         private void ExecuteEventLoop()

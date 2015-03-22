@@ -15,7 +15,7 @@ namespace SupermarketsChain.Tasks
 {
     class XMLImport : ITask
     {
-        public void Run()
+        public void Run(string[] args)
         {
             var xmlDoc = XDocument.Load(@"..\..\Xml\expenses.xml");
             var vendorNodes = xmlDoc.XPathSelectElements("/expenses-by-month/vendor");
