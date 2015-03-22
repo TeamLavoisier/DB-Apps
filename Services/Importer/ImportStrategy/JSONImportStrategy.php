@@ -1,5 +1,6 @@
 <?php
 namespace ANSR\Services\Importer\ImportStrategy;
+use Propel\Runtime\Propel;
 
 /**
  * Class JSONImportStrategy
@@ -16,6 +17,9 @@ class JSONImportStrategy implements ImportStrategy
     {
         $structure = json_decode($data, true);
 
+        $con = Propel::getConnection();
+        $sql = "SET FOREIGN_KEY_CHECKS=0";
+        $con->exec($sql);
         foreach ($structure as $tableName => $tableProps) {
             $query = "\\ANSR\\Propel\\Entity\\"
                 . ucfirst($tableName);
@@ -25,12 +29,15 @@ class JSONImportStrategy implements ImportStrategy
                 $entity = new $query();
 
                 foreach ($keys as $key) {
-                    $method = 'set' . $key;
+                    $method = 'set' . str_replace("_", "", $key);
                     $entity->$method($prop[$key]);
                 }
 
                 $entity->save();
             }
         }
+
+        $sql = "SET FOREIGN_KEY_CHECKS=1";
+        $con->exec($sql);
     }
 }
