@@ -1,0 +1,14 @@
+D:\Git\georgimanov\Databases\DB Applications\Teamwork\SupermarketsChain\bin\Debug\SupermarketsChain.exe.config
+D:\Git\georgimanov\Databases\DB Applications\Teamwork\SupermarketsChain\bin\Debug\SupermarketsChain.exe
+D:\Git\georgimanov\Databases\DB Applications\Teamwork\SupermarketsChain\bin\Debug\SupermarketsChain.pdb
+D:\Git\georgimanov\Databases\DB Applications\Teamwork\SupermarketsChain\bin\Debug\EntityFramework.dll
+D:\Git\georgimanov\Databases\DB Applications\Teamwork\SupermarketsChain\bin\Debug\EntityFramework.SqlServer.dll
+D:\Git\georgimanov\Databases\DB Applications\Teamwork\SupermarketsChain\bin\Debug\Newtonsoft.Json.dll
+D:\Git\georgimanov\Databases\DB Applications\Teamwork\SupermarketsChain\bin\Debug\EntityFramework.xml
+D:\Git\georgimanov\Databases\DB Applications\Teamwork\SupermarketsChain\bin\Debug\EntityFramework.SqlServer.xml
+D:\Git\georgimanov\Databases\DB Applications\Teamwork\SupermarketsChain\bin\Debug\Newtonsoft.Json.xml
+D:\Git\georgimanov\Databases\DB Applications\Teamwork\SupermarketsChain\obj\Debug\SupermarketsChain.exe
+D:\Git\georgimanov\Databases\DB Applications\Teamwork\SupermarketsChain\obj\Debug\SupermarketsChain.pdb
+D:\Git\georgimanov\Databases\DB Applications\Teamwork\SupermarketsChain\bin\Debug\itextsharp.dll
+D:\Git\georgimanov\Databases\DB Applications\Teamwork\SupermarketsChain\bin\Debug\itextsharp.xml
+D:\Git\georgimanov\Databases\DB Applications\Teamwork\SupermarketsChain\obj\Debug\SupermarketsChain.csprojResolveAssemblyReference.cache

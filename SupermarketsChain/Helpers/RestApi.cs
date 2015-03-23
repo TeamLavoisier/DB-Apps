@@ -10,7 +10,7 @@ namespace SupermarketsChain.Helpers
 {
     public class RestApi
     {
-        private static string BaseURL = "http://localhost:8004/TeamProject/";
+        private static string BaseURL = "http://localhost/dbApps-Core1.0/";
 
         public static string Response { get; private set; }
 

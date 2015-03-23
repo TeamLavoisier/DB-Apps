@@ -59,10 +59,12 @@ namespace SupermarketsChain
                     task = new GeneratePDF();
                     break;
                 case "load-reports":
-                    task = new ExcelImport();
+                    throw new NotImplementedException();
+                    //task = new ExcelImport();
                     break;
                 case "mysql-import":
-                    task = new MySQLImport();
+                    throw new NotImplementedException();    
+                    //task = new MySQLImport();
                     break;
                 default:
                     throw new ArgumentException("Invalid input");
