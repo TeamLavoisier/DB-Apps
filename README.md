@@ -1,2 +1,2 @@
 # DB-Apps
-Database Applications Teamwork Project @SoftUni
+*Database Applications* Teamwork Project @SoftUni
