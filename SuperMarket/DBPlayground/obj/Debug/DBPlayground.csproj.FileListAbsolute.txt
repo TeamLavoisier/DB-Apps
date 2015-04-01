@@ -14,3 +14,19 @@ D:\SoftUni\Level #3\DB Applications\Teamwork\SuperMarket\DBPlayground\bin\Debug\
 D:\SoftUni\Level #3\DB Applications\Teamwork\SuperMarket\DBPlayground\bin\Debug\MySql.Data.Entity.EF6.dll
 D:\SoftUni\Level #3\DB Applications\Teamwork\SuperMarket\DBPlayground\bin\Debug\EntityFramework.xml
 D:\SoftUni\Level #3\DB Applications\Teamwork\SuperMarket\DBPlayground\bin\Debug\EntityFramework.SqlServer.xml
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\DBPlayground\bin\Debug\DBPlayground.exe.config
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\DBPlayground\obj\Debug\DBPlayground.exe
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\DBPlayground\obj\Debug\DBPlayground.pdb
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\DBPlayground\bin\Debug\DBPlayground.exe
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\DBPlayground\bin\Debug\DBPlayground.pdb
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\DBPlayground\bin\Debug\EntityFramework.dll
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\DBPlayground\bin\Debug\EntityFramework.SqlServer.dll
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\DBPlayground\bin\Debug\MySql.Data.dll
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\DBPlayground\bin\Debug\MySql.Data.Entity.EF6.dll
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\DBPlayground\bin\Debug\SuperMarket.Model.dll
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\DBPlayground\bin\Debug\SuperMarket.MySQL.dll
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\DBPlayground\bin\Debug\SuperMarket.Model.pdb
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\DBPlayground\bin\Debug\SuperMarket.MySQL.pdb
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\DBPlayground\bin\Debug\EntityFramework.xml
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\DBPlayground\bin\Debug\EntityFramework.SqlServer.xml
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\DBPlayground\obj\Debug\DBPlayground.csprojResolveAssemblyReference.cache

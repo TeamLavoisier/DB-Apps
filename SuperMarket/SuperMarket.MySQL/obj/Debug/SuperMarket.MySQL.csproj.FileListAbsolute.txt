@@ -10,3 +10,15 @@ D:\SoftUni\Level #3\DB Applications\Teamwork\SuperMarket\SuperMarket.MySQL\bin\D
 D:\SoftUni\Level #3\DB Applications\Teamwork\SuperMarket\SuperMarket.MySQL\bin\Debug\MySql.Data.Entity.EF6.dll
 D:\SoftUni\Level #3\DB Applications\Teamwork\SuperMarket\SuperMarket.MySQL\bin\Debug\EntityFramework.xml
 D:\SoftUni\Level #3\DB Applications\Teamwork\SuperMarket\SuperMarket.MySQL\bin\Debug\EntityFramework.SqlServer.xml
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\SuperMarket.MySQL\bin\Debug\SuperMarket.MySQL.dll.config
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\SuperMarket.MySQL\bin\Debug\SuperMarket.MySQL.dll
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\SuperMarket.MySQL\bin\Debug\SuperMarket.MySQL.pdb
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\SuperMarket.MySQL\bin\Debug\EntityFramework.dll
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\SuperMarket.MySQL\bin\Debug\EntityFramework.SqlServer.dll
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\SuperMarket.MySQL\bin\Debug\MySql.Data.dll
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\SuperMarket.MySQL\bin\Debug\MySql.Data.Entity.EF6.dll
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\SuperMarket.MySQL\bin\Debug\EntityFramework.xml
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\SuperMarket.MySQL\bin\Debug\EntityFramework.SqlServer.xml
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\SuperMarket.MySQL\obj\Debug\SuperMarket.MySQL.csprojResolveAssemblyReference.cache
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\SuperMarket.MySQL\obj\Debug\SuperMarket.MySQL.dll
+D:\Git\georgimanov\Databases\DB Applications - GM\SuperMarket\SuperMarket.MySQL\obj\Debug\SuperMarket.MySQL.pdb
